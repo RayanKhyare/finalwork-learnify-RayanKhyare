@@ -1,0 +1,93 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// Define Roles table
+model Roles {
+  id    Int     @id @default(autoincrement())
+  name  String
+  Users Users[]
+}
+
+// Define Poll_votes table
+model Poll_votes {
+  id        Int         @id @default(autoincrement())
+  user_id   Int
+  poll_id   Int
+  option_id Int
+  user      Users       @relation(fields: [user_id], references: [id])
+  poll      Polls       @relation(fields: [poll_id], references: [id])
+  option    Poll_option @relation(fields: [option_id], references: [id])
+}
+
+// Define questions table
+model questions {
+  id        Int       @id @default(autoincrement())
+  stream_id Int
+  question  String
+  time      Int
+  stream    Streams   @relation(fields: [stream_id], references: [id])
+  answers   answers[]
+}
+
+// Define Users table
+model Users {
+  id         Int          @id @default(autoincrement())
+  role       Int
+  username   String
+  email      String       @unique
+  password   String
+  role_rel   Roles        @relation(fields: [role], references: [id])
+  streams    Streams[]
+  Poll_votes Poll_votes[]
+  answers    answers[]
+}
+
+// Define Streams table
+model Streams {
+  id          Int         @id @default(autoincrement())
+  user_id     Int
+  title       String
+  description String
+  iframe      String
+  user        Users       @relation(fields: [user_id], references: [id])
+  polls       Polls[]
+  questions   questions[]
+}
+
+// Define Polls table
+model Polls {
+  id            Int           @id @default(autoincrement())
+  stream_id     Int
+  poll_question String
+  time          Int
+  stream        Streams       @relation(fields: [stream_id], references: [id])
+  options       Poll_option[]
+  votes         Poll_votes[]
+}
+
+// Define answers table
+model answers {
+  id          Int       @id @default(autoincrement())
+  question_id Int
+  user_id     Int
+  question    questions @relation(fields: [question_id], references: [id])
+  user        Users     @relation(fields: [user_id], references: [id])
+}
+
+// Define Poll_option table
+model Poll_option {
+  id      Int          @id @default(autoincrement())
+  poll_id Int
+  option  String
+  poll    Polls        @relation(fields: [poll_id], references: [id])
+  votes   Poll_votes[]
+}
