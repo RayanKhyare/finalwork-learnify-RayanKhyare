@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const prisma = new PrismaClient();
 const bcrypt = require("bcryptjs");
 const { registerValidation, loginValidation } = require("../validation");
+const verify = require("./verifyToken");
 
 router.get("/users", async (req, res) => {
   const users = await prisma.users.findMany();
@@ -70,7 +71,7 @@ router.post("/login", async (req, res) => {
   // res.json({ accessToken: token });
 });
 
-router.get("/roles", async (req, res) => {
+router.get("/roles", verify, async (req, res) => {
   const roles = await prisma.roles.findMany();
   res.json(roles);
 });
