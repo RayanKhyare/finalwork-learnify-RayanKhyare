@@ -6,11 +6,6 @@ const bcrypt = require("bcryptjs");
 const { registerValidation, loginValidation } = require("../validation");
 const verify = require("./verifyToken");
 
-router.get("/users", async (req, res) => {
-  const users = await prisma.users.findMany();
-  res.json(users);
-});
-
 router.post("/register", async (req, res) => {
   //Validate schema
   const { error } = registerValidation(req.body);
@@ -61,14 +56,11 @@ router.post("/login", async (req, res) => {
   const token = jwt.sign(
     {
       id: user.id,
-      role: user.role,
-      username: user.username,
-      email: user.email,
     },
-    process.env.TOKEN_SECRET
+    process.env.TOKEN_SECRET,
+    { expiresIn: "1h" }
   );
   res.header("auth-token", token).send(token);
-  // res.json({ accessToken: token });
 });
 
 router.get("/roles", verify, async (req, res) => {

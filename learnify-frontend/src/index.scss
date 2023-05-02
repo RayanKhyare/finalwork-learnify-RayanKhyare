@@ -1,3 +1,11 @@
+@import "./utilities/variables";
+@font-face {
+  font-family: "SF Pro Text";
+  src: local("SFProText"),
+    url("./fonts/SFProText/SF-PRO-TEXT-REGULAR.otf") format("embedded-opentype");
+  font-weight: normal;
+}
+
 html,
 body,
 div,
@@ -121,4 +129,8 @@ q:after {
 table {
   border-collapse: collapse;
   border-spacing: 0;
+}
+
+html {
+  background-color: $background-color;
 }

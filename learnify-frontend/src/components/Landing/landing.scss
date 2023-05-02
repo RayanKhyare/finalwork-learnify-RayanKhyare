@@ -1,0 +1,68 @@
+@import "../../utilities/variables";
+
+.landing {
+  color: $text-color;
+  margin-top: 25px;
+  .landing-top {
+    display: flex;
+
+    .landing-top-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: flex-start;
+      width: 50%;
+      .landing-title {
+        font-family: "Sora", sans-serif;
+        font-size: 70px;
+        line-height: 1.3;
+        .saai {
+          font-weight: 600;
+        }
+      }
+
+      .landing-btn {
+        background-color: $blue;
+        font-family: "SF Pro Display", sans-serif;
+        color: white;
+        padding: 20px 75px;
+        font-size: 1.8em;
+        font-weight: 100;
+        border-radius: 11px;
+        border: none;
+        cursor: pointer;
+      }
+      .landing-top-description {
+        font-family: "SF Pro Display", sans-serif;
+        width: 80%;
+        font-size: 25px;
+        line-height: 1.4;
+        font-weight: 100;
+
+        color: $smalltext-color;
+      }
+    }
+    .landing-top-right {
+      width: 60%;
+
+      .landing-image {
+        width: 100%;
+        object-fit: cover;
+        height: 100%;
+        border-radius: 18px;
+      }
+    }
+  }
+  .landing-middle {
+    width: 100%;
+    margin-top: 150px;
+    .landing-middle-title {
+      width: 100%;
+      font-family: "Sora", sans-serif;
+      color: $text-color;
+      font-size: 3em;
+      font-weight: 600;
+      text-align: center;
+    }
+  }
+}

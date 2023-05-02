@@ -20,5 +20,17 @@ const loginValidation = (data) => {
   return userSchema.validate(data);
 };
 
+const streamValidation = (data) => {
+  const streamSchema = Joi.object({
+    user_id: Joi.number().required(),
+    category_id: Joi.number().required(),
+    title: Joi.string().required(),
+    description: Joi.string().required(),
+    iframe: Joi.string().required(),
+  });
+  return streamSchema.validate(data);
+};
+
 module.exports.registerValidation = registerValidation;
 module.exports.loginValidation = loginValidation;
+module.exports.streamValidation = streamValidation;

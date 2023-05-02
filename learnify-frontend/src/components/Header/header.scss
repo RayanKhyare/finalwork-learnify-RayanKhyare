@@ -1,6 +1,83 @@
-header {
+@import "../../utilities/variables";
+.header {
+  padding: 50px 0px;
+  display: flex;
+  justify-content: space-between;
+  font-family: "Sora", sans-serif;
+  align-items: center;
+  color: $text-color;
+  .username {
+    font-size: 1.3em;
+    font-weight: 600;
+    text-transform: capitalize;
+  }
+  .navigation {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    .navigation-general {
+      padding-left: 45px;
+      .navigation-ul {
+        display: flex;
+        .home-li,
+        .bladeren-li {
+          text-decoration: none;
+          padding-left: 45px;
+          font-weight: 500;
+          font-size: 1.3em;
+          cursor: pointer;
+        }
+        .home-li {
+          text-decoration: none;
+          padding-left: 0px;
+          font-weight: 500;
+          font-size: 1.3em;
+        }
+      }
+    }
+
+    .navigation-teacher {
+      display: flex;
+      align-items: flex-start;
+      padding-right: 15px;
+
+      .stream-btn {
+        padding-left: 15px;
+        cursor: pointer;
+      }
+    }
+  }
   .title_logo {
     font-size: 30px;
-    font-family: "Sora", sans-serif;
+    cursor: pointer;
+  }
+  .userdiv {
+    display: flex;
+    .logout-btn {
+      // width: 10px;
+      cursor: pointer;
+    }
+  }
+  .authbuttons {
+    display: flex;
+
+    .inloggen-btn,
+    .aanmelden-btn {
+      font-family: "Sora", sans-serif;
+      border-radius: 5px;
+      font-size: 1em;
+      cursor: pointer;
+      border: none;
+    }
+    .inloggen-btn {
+      background-color: $background-color;
+      padding: 12px 20px;
+    }
+    .aanmelden-btn {
+      padding: 12px 15px;
+      margin-left: 5px;
+      background-color: $orange;
+    }
   }
 }

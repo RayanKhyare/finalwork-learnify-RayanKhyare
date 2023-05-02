@@ -51,15 +51,24 @@ model Users {
   answers    answers[]
 }
 
+model Category {
+  id          Int       @id @default(autoincrement())
+  name        String
+  streams     Streams[]
+  category_id Int       @default(1)
+}
+
 // Define Streams table
 model Streams {
   id          Int         @id @default(autoincrement())
   user_id     Int
+  category_id Int
   title       String
   description String
   iframe      String
   user        Users       @relation(fields: [user_id], references: [id])
   polls       Polls[]
+  category    Category    @relation(fields: [category_id], references: [id])
   questions   questions[]
 }
 

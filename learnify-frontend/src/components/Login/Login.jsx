@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import apiService from "../services/apiService";
 import { useNavigate } from "react-router-dom";
+import "./login.scss";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -16,7 +17,9 @@ const Login = () => {
       // redirect to protected route
       console.log(response.data);
       console.log(response);
-      navigate("/main");
+      setTimeout(() => {
+        navigate("/main");
+      }, 100);
     } catch (error) {
       console.error(error);
       // display error message
@@ -24,27 +27,45 @@ const Login = () => {
     }
   };
 
+  const handleRedirect = (e) => {
+    navigate("/register");
+  };
+
   return (
-    <form onSubmit={handleSubmit}>
-      {error && <div>{error}</div>}
-      <label>
-        Email:
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-      </label>
-      <label>
-        Password:
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-      </label>
-      <button type="submit">Login</button>
-    </form>
+    <div className="login">
+      <div className="login-left">
+        <h2 className="login-title">Welkom terug </h2>
+        <form class="login-form" onSubmit={handleSubmit}>
+          {error && <div>{error}</div>}
+
+          <input
+            type="email"
+            className="email"
+            value={email}
+            placeholder="Voer uw e-mail in"
+            onChange={(e) => setEmail(e.target.value)}
+          />
+
+          <input
+            type="password"
+            className="password"
+            value={password}
+            placeholder="Voer uw wachtwoord in"
+            onChange={(e) => setPassword(e.target.value)}
+          />
+
+          <button className="login-btn" type="submit">
+            Aanmelden
+          </button>
+        </form>
+        <p className="geenaccount">
+          Heb je geen account?{" "}
+          <span className="aanmelden" onClick={handleRedirect}>
+            Inschrijven
+          </span>
+        </p>
+      </div>
+    </div>
   );
 };
 

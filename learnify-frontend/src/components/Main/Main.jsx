@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import apiService from "../services/apiService";
 
 export default function Main() {
   const [role, setRole] = useState([]);
+  const location = useLocation();
 
   useEffect(() => {
     async function fetchData() {
@@ -16,7 +18,7 @@ export default function Main() {
     }
 
     fetchData();
-  }, []);
+  }, [location]);
 
   return (
     <div>

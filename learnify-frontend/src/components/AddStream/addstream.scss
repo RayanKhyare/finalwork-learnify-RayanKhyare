@@ -1,0 +1,43 @@
+@import "../../utilities/variables";
+.addstream {
+  margin-top: 25px;
+  .addstream-header {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    .addstream-title {
+      font-size: 3em;
+      font-family: "Sora", sans-serif;
+      font-weight: 600;
+      color: $text-color;
+    }
+
+    .addstream-btn {
+      background-color: $blue;
+      color: white;
+      font-family: "Sora", sans-serif;
+      font-size: 1.5em;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px 20px;
+      border-radius: 10px;
+      cursor: pointer;
+      border: none;
+      .checksign {
+        margin-left: 0px;
+        margin-right: 10px;
+      }
+    }
+  }
+
+  .addstream-description {
+    width: 50%;
+    font-size: 1.5em;
+    font-family: "Sora", sans-serif;
+    color: #626262;
+    font-weight: 300;
+    margin-top: 5px;
+    line-height: 1.1;
+  }
+}
