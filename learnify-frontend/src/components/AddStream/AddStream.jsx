@@ -25,18 +25,18 @@ export default function AddStream() {
   });
 
   const handleSubmit = async (e) => {
+    const randomNumber = Math.floor(Math.random() * 1000) + 1;
     e.preventDefault();
     try {
       const response = await apiService.postStream({
         user_id,
         category_id: parseInt(category),
+        room_id: parseInt(randomNumber),
         title,
         description,
         iframe,
       });
-      console.log(response.data);
 
-      console.log(response);
       navigate("/main");
       // redirect to protected route
     } catch (error) {
@@ -59,46 +59,41 @@ export default function AddStream() {
         met een iframe-systeem, zodat uw livestreams op zoveel mogelijk
         platforms beschikbaar zijn.
       </p>
-
+      {error && <div>{error}</div>}
       <form
-        class="addstream-form"
+        className="addstream-form"
         //   onSubmit={handleSubmit}
       >
         {/* {error && <div>{error}</div>} */}
-        <div className="addstream-field">
-          <label className="addstream-form-label">iFrame</label>
-          <input
-            type="text"
-            className="title"
-            value={iframe}
-            placeholder="Voer de iframe in"
-            onChange={(e) => setIframe(e.target.value)}
-          />
+        <div className="firstline">
+          <div className="addstream-field">
+            <label className="addstream-form-label">YouTube link</label>
+            <input
+              type="text"
+              className="input"
+              value={iframe}
+              placeholder="Voer de YouTube link in"
+              onChange={(e) => setIframe(e.target.value)}
+            />
+          </div>
+
+          <div className="addstream-field">
+            <label className="addstream-form-label">Livestream title</label>
+            <input
+              type="text"
+              className="input"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+          </div>
         </div>
 
         <div className="addstream-field">
-          <label className="addstream-form-label">Livestream title</label>
-          <input
-            type="text"
-            className="title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
-        </div>
-        <div className="addstream-field">
-          <label className="addstream-form-label">Beschrijving</label>
-          <input
-            type="textarea"
-            className="title"
-            value={description}
-            placeholder=""
-            onChange={(e) => setDescription(e.target.value)}
-          />
-          <p>Maximum 200 karakters</p>
-        </div>
-        <div className="addstream-field">
-          <label htmlFor="role">Voor welke opleiding geeft u les ?</label>
+          <label className="addstream-form-label" htmlFor="role">
+            Voor welke opleiding geeft u les ?
+          </label>
           <select
+            className="input opleiding-input"
             id="role"
             value={category}
             onChange={(e) => setCategory(e.target.value)}
@@ -106,6 +101,17 @@ export default function AddStream() {
             <option value="">Kies een opleiding</option>
             <option value="1">Multimedia & Creative Technologies</option>
           </select>
+        </div>
+        <div className="addstream-field">
+          <label className="addstream-form-label">Beschrijving</label>
+          <textarea
+            type="textarea"
+            className="input textarea"
+            value={description}
+            placeholder=""
+            onChange={(e) => setDescription(e.target.value)}
+          />
+          <p>Maximum 200 karakters</p>
         </div>
       </form>
     </div>

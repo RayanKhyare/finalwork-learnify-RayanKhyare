@@ -1,0 +1,192 @@
+@import "../../utilities/variables";
+
+.main {
+  margin-top: 15px;
+  .featuredstream-container {
+    width: 100%;
+    display: flex;
+    height: 40vh;
+
+    .featuredstream-container-left {
+      width: 60%;
+      font-size: 1.2em;
+      .featuredstream-streamtitle {
+        font-size: 3em;
+        font-family: "Sora", sans-serif;
+        line-height: 1.3;
+        color: $text-color;
+        width: 100%;
+        font-weight: 500;
+        cursor: pointer;
+      }
+      .featuredstream-streamercontainer {
+        display: flex;
+        align-items: center;
+        padding-top: 10px;
+        .featuredstream-streamerimg {
+          height: 40px;
+          width: 40px;
+          object-fit: cover;
+          border-radius: 50%;
+          padding-right: 10px;
+        }
+        .featuredstream-streamername {
+          font-size: 1.2em;
+          font-family: "Sora", sans-serif;
+
+          color: $text-color;
+          font-weight: 200;
+        }
+      }
+
+      .featuredstream-description {
+        font-size: 0.9em;
+        font-family: "Sora", sans-serif;
+        padding-top: 10px;
+      }
+    }
+    .featuredstream-container-right {
+      width: 100%;
+      display: flex;
+      justify-content: flex-end;
+
+      .featuredstream-iframe {
+        width: 80%;
+        height: 100%;
+        border-radius: 10px;
+      }
+    }
+  }
+
+  .allstreams {
+    margin-top: 50px;
+    padding-top: 50px;
+    border-top: 1px solid $text-color;
+    color: $text-color;
+    width: 100%;
+    .allstreams-title {
+      font-family: "Sora", sans-serif;
+      font-size: 1.6em;
+      font-weight: 600;
+    }
+    .streamscontainer {
+      margin-top: 25px;
+      width: 100%;
+      display: flex;
+
+      .no-messages {
+        width: 100%;
+        text-align: center;
+        font-family: "Sora", sans-serif;
+        font-size: 1.6em;
+        font-weight: 600;
+        margin-top: 50px;
+      }
+      .streamcontainer {
+        width: calc(100% / 5);
+        padding: 10px;
+        padding-left: 0px;
+        cursor: pointer;
+        .featuredstream-thumbnail {
+          border-radius: 15px;
+          width: 100%;
+        }
+
+        .stream-title {
+          margin-top: 10px;
+          color: $text-color;
+          font-weight: 500;
+          font-size: 1em;
+          font-family: "Sora", sans-serif;
+          width: 100%;
+        }
+
+        .streamerinfo {
+          margin-top: 10px;
+          display: flex;
+          align-items: center;
+          .streamer-img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            object-fit: cover;
+          }
+
+          .streamer-username {
+            font-size: 1em;
+            font-family: "Sora", sans-serif;
+            margin-left: 10px;
+            color: $smalltext-color;
+            font-weight: 300;
+          }
+        }
+      }
+    }
+  }
+
+  .allvideos {
+    margin-top: 50px;
+    padding-top: 50px;
+    border-top: 1px solid $text-color;
+    color: $text-color;
+    width: 100%;
+    .allvideos-title {
+      font-family: "Sora", sans-serif;
+      font-size: 1.6em;
+      font-weight: 600;
+    }
+    .videoscontainer {
+      margin-top: 25px;
+      width: 100%;
+      display: flex;
+
+      .no-messages {
+        width: 100%;
+        text-align: center;
+        font-family: "Sora", sans-serif;
+        font-size: 1.6em;
+        font-weight: 600;
+        margin-top: 50px;
+      }
+      .videocontainer {
+        width: calc(100% / 5);
+        padding: 10px;
+        padding-left: 0px;
+        cursor: pointer;
+        .featuredstream-thumbnail {
+          border-radius: 15px;
+          width: 100%;
+        }
+
+        .video-title {
+          margin-top: 10px;
+          color: $text-color;
+          font-weight: 500;
+          font-size: 1em;
+          font-family: "Sora", sans-serif;
+          width: 100%;
+        }
+
+        .streamerinfo {
+          margin-top: 10px;
+          display: flex;
+          align-items: center;
+          .streamer-img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            object-fit: cover;
+          }
+
+          .streamer-username {
+            font-size: 1em;
+            font-family: "Sora", sans-serif;
+            margin-left: 10px;
+            color: $smalltext-color;
+            font-weight: 300;
+          }
+        }
+      }
+    }
+  }
+}

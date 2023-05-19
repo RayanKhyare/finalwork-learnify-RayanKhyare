@@ -21,10 +21,11 @@ router.get("/:streamId", async (req, res) => {
   }
 });
 
-router.post("/", verify, async (req, res) => {
+router.post("/", async (req, res) => {
   //Validate schema
 
-  const { user_id, category_id, title, description, iframe } = req.body;
+  const { user_id, category_id, room_id, title, description, iframe } =
+    req.body;
 
   const { error } = streamValidation(req.body);
   if (error) return res.status(400).send(error.details[0].message);
@@ -33,6 +34,7 @@ router.post("/", verify, async (req, res) => {
     data: {
       user_id,
       category_id,
+      room_id,
       title,
       description,
       iframe,
@@ -42,6 +44,57 @@ router.post("/", verify, async (req, res) => {
     res.send(stream);
   } catch {
     res.status(400).send(err);
+  }
+});
+
+router.get("/user/:user_id", async (req, res) => {
+  const { user_id } = req.params;
+
+  try {
+    const streams = await prisma.streams.findMany({
+      where: {
+        user_id: parseInt(user_id),
+      },
+    });
+
+    res.send(streams);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal server error");
+  }
+});
+
+router.put("/:streamId", async (req, res) => {
+  const { streamId } = req.params;
+  const { user_id, category_id, room_id, title, description, iframe } =
+    req.body;
+
+  // const { error } = streamValidation(req.body);
+  // if (error) return res.status(400).send(error.details[0].message);
+
+  const updatedStream = await prisma.streams.update({
+    where: { id: parseInt(streamId) },
+    data: { user_id, category_id, room_id, title, description, iframe },
+  });
+  try {
+    res.send(updatedStream);
+  } catch {
+    res.status(400).send(err);
+  }
+});
+
+router.delete("/:streamId", async (req, res) => {
+  const { streamId } = req.params;
+
+  try {
+    const deletedStream = await prisma.streams.delete({
+      where: { id: parseInt(streamId) },
+    });
+
+    res.json({ message: "Stream deleted successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal server error");
   }
 });
 

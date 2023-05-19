@@ -24,6 +24,7 @@ const streamValidation = (data) => {
   const streamSchema = Joi.object({
     user_id: Joi.number().required(),
     category_id: Joi.number().required(),
+    room_id: Joi.number().required(),
     title: Joi.string().required(),
     description: Joi.string().required(),
     iframe: Joi.string().required(),
@@ -31,6 +32,18 @@ const streamValidation = (data) => {
   return streamSchema.validate(data);
 };
 
+const videoValidation = (data) => {
+  const videoSchema = Joi.object({
+    user_id: Joi.number().required(),
+    category_id: Joi.number().required(),
+    title: Joi.string().required(),
+    description: Joi.string().required(),
+    iframe: Joi.string().required(),
+  });
+  return videoSchema.validate(data);
+};
+
 module.exports.registerValidation = registerValidation;
 module.exports.loginValidation = loginValidation;
 module.exports.streamValidation = streamValidation;
+module.exports.videoValidation = videoValidation;

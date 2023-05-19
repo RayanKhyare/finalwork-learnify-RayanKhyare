@@ -6,6 +6,10 @@
   font-weight: normal;
 }
 
+body::-webkit-scrollbar {
+  display: none;
+}
+
 html,
 body,
 div,

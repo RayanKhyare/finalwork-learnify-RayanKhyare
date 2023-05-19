@@ -60,9 +60,83 @@
       width: 100%;
       font-family: "Sora", sans-serif;
       color: $text-color;
-      font-size: 3em;
+      font-size: 3.5em;
       font-weight: 600;
       text-align: center;
+    }
+
+    .landing-middle-container {
+      display: flex;
+      margin-top: 50px;
+      justify-content: space-between;
+      align-items: flex-start;
+      .info-container {
+        display: flex;
+        flex-direction: column;
+        width: calc(100% / 3);
+        .info-icon {
+          width: 75px;
+          height: 75px;
+        }
+
+        .info-title {
+          font-size: 1.8em;
+          font-family: "Sora", sans-serif;
+          font-weight: 500;
+          color: $text-color;
+          margin-top: 15px;
+        }
+
+        .info-description {
+          font-size: 1em;
+          font-family: "Sora", sans-serif;
+          font-weight: 500;
+          color: $text-color;
+          margin-top: 15px;
+          line-height: 1.2;
+          width: 80%;
+        }
+      }
+    }
+  }
+
+  .landing-bottom {
+    margin-top: 100px;
+    width: 100%;
+    margin-bottom: 50px;
+
+    .bottom-title {
+      font-size: 4em;
+      width: 50%;
+      font-family: "Sora", sans-serif;
+      font-weight: 600;
+      line-height: 1.4;
+    }
+
+    .bottom-description {
+      margin-top: 25px;
+      font-size: 1.2em;
+      width: 50%;
+      font-family: "Sora", sans-serif;
+      font-weight: 600;
+      line-height: 1.3;
+
+      .orange {
+        color: $dark-orange;
+      }
+    }
+
+    .landing-btn {
+      background-color: $blue;
+      font-family: "Sora", sans-serif;
+      color: white;
+      padding: 20px 75px;
+      font-size: 1.8em;
+      font-weight: 500;
+      border-radius: 11px;
+      border: none;
+      cursor: pointer;
+      margin-top: 25px;
     }
   }
 }

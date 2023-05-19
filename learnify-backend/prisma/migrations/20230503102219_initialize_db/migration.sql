@@ -37,14 +37,16 @@ CREATE TABLE "Users" (
 -- CreateTable
 CREATE TABLE "Category" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    "name" TEXT NOT NULL
+    "name" TEXT NOT NULL,
+    "category_id" INTEGER NOT NULL DEFAULT 1
 );
 
 -- CreateTable
 CREATE TABLE "Streams" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "user_id" INTEGER NOT NULL,
-    "category_id" INTEGER NOT NULL DEFAULT 1,
+    "category_id" INTEGER NOT NULL,
+    "room_id" INTEGER NOT NULL,
     "title" TEXT NOT NULL,
     "description" TEXT NOT NULL,
     "iframe" TEXT NOT NULL,

@@ -20,9 +20,6 @@ const Register = () => {
         email,
         password,
       });
-      console.log(response.data);
-
-      console.log(response);
       navigate("/login");
       // redirect to protected route
     } catch (error) {

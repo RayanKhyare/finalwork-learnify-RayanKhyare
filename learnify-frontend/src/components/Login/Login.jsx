@@ -15,8 +15,7 @@ const Login = () => {
       const response = await apiService.login({ email, password });
       localStorage.setItem("token", response.data);
       // redirect to protected route
-      console.log(response.data);
-      console.log(response);
+
       setTimeout(() => {
         navigate("/main");
       }, 100);
