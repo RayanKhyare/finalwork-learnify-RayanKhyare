@@ -6,6 +6,7 @@ import apiService from "../services/apiService";
 import extractVideoId from "../services/extractVideoid";
 import axios from "axios";
 import { getProfilePicture } from "../services/profilePicService";
+import googleApiKey from "../services/apiKey";
 import jwt_decode from "jwt-decode";
 
 export default function AddStream() {
@@ -32,7 +33,7 @@ export default function AddStream() {
     try {
       // Extract video ID from YouTube URL
       const videoId = extractVideoId(iframe);
-      const apiKEY = "AIzaSyDAd7pwS_8namloYU3rtsSeKo28-wBKDrQ";
+
       // Make API request to YouTube Data API
 
       if (!videoId) {
@@ -42,7 +43,7 @@ export default function AddStream() {
       }
 
       const response = await axios.get(
-        `https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${videoId}&key=${apiKEY}`
+        `https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${videoId}&key=${googleApiKey.googleApiKey}`
       );
 
       if (response.data.items.length === 0) {

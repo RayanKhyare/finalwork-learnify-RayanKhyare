@@ -231,7 +231,7 @@
           display: none;
         }
         .answers-container {
-          margin-right: 15px;
+          // margin-right: 15px;
           display: flex;
           flex-direction: column;
           align-items: center;
@@ -705,4 +705,13 @@
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
   display: flex;
+}
+
+.no-messages-white {
+  width: 100%;
+  text-align: center;
+  font-size: 1.1em;
+  color: $orange;
+  font-family: "Sora", sans-serif;
+  padding-top: 25%;
 }

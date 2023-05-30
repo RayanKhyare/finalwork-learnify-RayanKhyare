@@ -654,14 +654,18 @@ export default function Dashboard() {
                 </div>
                 <p className="qanda-question">{qstn.question}</p>
                 <div className="answers-container">
-                  {answers
-                    .filter((answr) => answr.question_id === qstn.id) // Filter answers by question_id
-                    .map((answr, index) => (
-                      <div className="answer" key={index}>
-                        <h1 className="answer-user">{answr.username}</h1>
-                        <p className="answer-text">{answr.answer}</p>
-                      </div>
-                    ))}
+                  {answers.length === 0 ? (
+                    <p className="no-messages-white">Nog geen antwoorden</p>
+                  ) : (
+                    answers
+                      .filter((answr) => answr.question_id === qstn.id) // Filter answers by question_id
+                      .map((answr, index) => (
+                        <div className="answer" key={index}>
+                          <h1 className="answer-user">{answr.username}</h1>
+                          <p className="answer-text">{answr.answer}</p>
+                        </div>
+                      ))
+                  )}
                 </div>
               </div>
             ))}
