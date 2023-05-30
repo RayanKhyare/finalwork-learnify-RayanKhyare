@@ -3,7 +3,9 @@ import { useNavigate, useLocation } from "react-router-dom";
 import "./addstream.scss";
 import checksign from "../../assets/check.svg";
 import apiService from "../services/apiService";
-
+import extractVideoId from "../services/extractVideoid";
+import axios from "axios";
+import { getProfilePicture } from "../services/profilePicService";
 import jwt_decode from "jwt-decode";
 
 export default function AddStream() {
@@ -11,6 +13,7 @@ export default function AddStream() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
+  const [categories, setCategories] = useState("");
   const [user_id, setuser_id] = useState("");
   const [error, setError] = useState("");
 
@@ -24,8 +27,44 @@ export default function AddStream() {
     }
   });
 
+  const checkUrl = async (e) => {
+    e.preventDefault();
+    try {
+      // Extract video ID from YouTube URL
+      const videoId = extractVideoId(iframe);
+      const apiKEY = "AIzaSyDAd7pwS_8namloYU3rtsSeKo28-wBKDrQ";
+      // Make API request to YouTube Data API
+
+      if (!videoId) {
+        // Handle invalid URL
+        setError("Invalid YouTube URL");
+        return;
+      }
+
+      const response = await axios.get(
+        `https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${videoId}&key=${apiKEY}`
+      );
+
+      if (response.data.items.length === 0) {
+        // Handle non-existent video
+        setError("YouTube video not found");
+        return;
+      }
+
+      // Extract title and description from API response
+      const { title, description } = response.data.items[0].snippet;
+
+      // Update input values
+      setTitle(title);
+      setDescription(description);
+    } catch (error) {
+      console.error(error);
+      setError("An error occurred");
+    }
+  };
+
   const handleSubmit = async (e) => {
-    const randomNumber = Math.floor(Math.random() * 1000) + 1;
+    const randomNumber = Math.floor(Math.random() * 10000) + 1;
     e.preventDefault();
     try {
       const response = await apiService.postStream({
@@ -45,74 +84,103 @@ export default function AddStream() {
       setError(error.response.data);
     }
   };
+
+  useEffect(() => {
+    async function fetchAllCategories() {
+      try {
+        const response = await apiService.getCategories();
+        console.log(response.data);
+
+        setCategories(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    fetchAllCategories();
+  }, [location]);
+
   return (
     <div className="addstream">
       <div className="addstream-header">
         <h1 className="addstream-title">Een livestream starten</h1>
-        <button className="addstream-btn" type="submit" onClick={handleSubmit}>
-          <img src={checksign} className="checksign" />
-          Live starten
-        </button>
       </div>
       <p className="addstream-description">
-        Het starten van een livestream in Learnify is heel eenvoudig. Wij werken
-        met een iframe-systeem, zodat uw livestreams op zoveel mogelijk
-        platforms beschikbaar zijn.
+        Het starten van een livestream in Learnify is heel eenvoudig. U hoeft
+        alleen een Youtube URL in te vullen en de nodige informatie toe te
+        voegen!
       </p>
-      {error && <div>{error}</div>}
+
       <form
         className="addstream-form"
         //   onSubmit={handleSubmit}
       >
-        {/* {error && <div>{error}</div>} */}
+        {error && <div className="error">{error}</div>}
         <div className="firstline">
           <div className="addstream-field">
             <label className="addstream-form-label">YouTube link</label>
-            <input
-              type="text"
-              className="input"
-              value={iframe}
-              placeholder="Voer de YouTube link in"
-              onChange={(e) => setIframe(e.target.value)}
-            />
+            <div>
+              <input
+                type="text"
+                className="input iframe"
+                value={iframe}
+                placeholder="Voer de YouTube link in"
+                onChange={(e) => setIframe(e.target.value)}
+              />
+              <button className="checkurlbtn" type="submit" onClick={checkUrl}>
+                Check URL
+              </button>
+            </div>
           </div>
+        </div>
+        <div className="firstline-vertical">
+          <div>
+            <div className="addstream-field">
+              <label className="addstream-form-label">Livestream title</label>
 
+              <input
+                type="text"
+                className="input"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+              />
+            </div>
+
+            <div className="addstream-field">
+              <label className="addstream-form-label" htmlFor="role">
+                Voor welke opleiding geeft u les ?
+              </label>
+              <select
+                className="input opleiding-input"
+                id="role"
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+              >
+                <option value="">Kies een opleiding</option>
+                {categories &&
+                  categories.map((category, index) => (
+                    <option value={category.id}>{category.name}</option>
+                  ))}
+              </select>
+            </div>
+          </div>
           <div className="addstream-field">
-            <label className="addstream-form-label">Livestream title</label>
-            <input
-              type="text"
-              className="input"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
+            <label className="addstream-form-label">Beschrijving</label>
+            <textarea
+              type="textarea"
+              className="input textarea"
+              value={description}
+              placeholder=""
+              onChange={(e) => setDescription(e.target.value)}
+              maxLength={200}
             />
+            <p className="max">Maximum 200 karakters</p>
           </div>
         </div>
-
-        <div className="addstream-field">
-          <label className="addstream-form-label" htmlFor="role">
-            Voor welke opleiding geeft u les ?
-          </label>
-          <select
-            className="input opleiding-input"
-            id="role"
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-          >
-            <option value="">Kies een opleiding</option>
-            <option value="1">Multimedia & Creative Technologies</option>
-          </select>
-        </div>
-        <div className="addstream-field">
-          <label className="addstream-form-label">Beschrijving</label>
-          <textarea
-            type="textarea"
-            className="input textarea"
-            value={description}
-            placeholder=""
-            onChange={(e) => setDescription(e.target.value)}
-          />
-          <p>Maximum 200 karakters</p>
-        </div>
+        <button className="addstream-btn" type="submit" onClick={handleSubmit}>
+          <img src={checksign} className="checksign" />
+          Live starten
+        </button>
       </form>
     </div>
   );

@@ -1,14 +1,23 @@
 @import "../../utilities/variables";
 
 .login {
+  display: flex;
+
   .login-left {
     width: fit-content;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    width: 50vw;
+
+    /* Add the following properties for vertical centering */
+    min-height: calc(
+      100vh - 200px
+    ); /* Set the height to full viewport height */
+
     .login-title {
       font-family: "Sora", sans-serif;
-      font-size: 70px;
+      font-size: 2.5em;
       color: $text-color;
       margin-bottom: 20px;
     }
@@ -20,6 +29,7 @@
 
       .email,
       .password {
+        width: 50%;
         padding: 20px 0px;
         padding-left: 25px;
         color: $text-color;
@@ -29,6 +39,7 @@
         border: 1px solid $text-color;
       }
       .login-btn {
+        width: 53%;
         background-color: $blue;
         color: white;
         padding: 15px 0px;

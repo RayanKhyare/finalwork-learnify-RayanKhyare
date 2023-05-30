@@ -4,7 +4,7 @@ import { RxCross1 } from "react-icons/rx";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import apiService from "../services/apiService";
-import stockimage from "../../assets/stockimage_man.jpg";
+
 import Video from "../services/videoService";
 import ReceivedMessage from "../ReceivedMessage/ReceivedMessage";
 import SentMessage from "../SentMessage/SentMessage";
@@ -26,43 +26,112 @@ export default function () {
   const [remainingTime, setRemainingTime] = useState(0);
   const [answer, setAnswer] = useState(null);
 
+  const [canSendMessage, setCanSendMessage] = useState(true);
+  const [cooldownTimer, setCooldownTimer] = useState(0);
+
   const [poll, setPoll] = useState(null);
+  const [chosenOptionID, setChosenOptionID] = useState("");
   const [vote, setVote] = useState("");
 
   const [showQandAOverlay, setShowQandAOverlay] = useState(true);
   const [showPollOverlay, setShowPollOverlay] = useState(true);
   const { user } = useContext(UserContext);
 
+  const navigate = useNavigate();
+
   const joinRoom = useCallback(
     (room) => {
       if (room !== "") {
-        socket.emit("join_room", { user: user.username, room });
+        socket.emit("join_room", { username: user.username, room });
       }
     },
     [user]
   );
 
-  const sendMessage = () => {
-    socket.emit("send_message", { user: user.username, message, room });
-    setMessages([...messages, { message, user: user.username }]);
+  // Send Chat message
+  const sendMessage = async () => {
+    if (canSendMessage) {
+      // Your logic to send the message goes here
+
+      const username = user.username || "Anoniem";
+
+      socket.emit("send_message", { username: username, message, room });
+      setMessages([...messages, { message, username: username }]);
+
+      try {
+        const response = await apiService.postMessages({
+          username: username,
+          stream_id: parseInt(streamid),
+          message,
+        });
+      } catch (error) {
+        console.error(error);
+      }
+
+      // Disable sending messages for 5 seconds
+      setCanSendMessage(false);
+      setCooldownTimer(5);
+
+      setTimeout(() => {
+        setCanSendMessage(true);
+      }, 5000);
+    }
   };
 
-  const sendAnswer = () => {
-    console.log(answer);
-    socket.emit("send_answer", {
-      user,
-      room,
-      answer: answer,
-    });
+  const sendAnswer = async () => {
+    const username = user.username || "Anoniem";
+    try {
+      socket.emit("send_answer", {
+        stream_id: streamid,
+        question_id: question.id,
+        username: username,
+        room,
+        answer: answer,
+      });
+      const response = await apiService.postAnswers({
+        stream_id: parseInt(streamid),
+        question_id: parseInt(question.id),
+        username: username,
+        answer: answer,
+      });
+      setShowQandAOverlay(false);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
-  const sendVote = (vote) => {
-    socket.emit("send_vote", {
-      user: user.username,
-      room,
-      vote: vote,
-    });
+  const sendVote = async (vote, id) => {
+    const username = user.username || "Anoniem";
+    try {
+      socket.emit("send_vote", {
+        poll_id: poll.id,
+        user: username,
+        room,
+        vote: vote,
+        option_id: parseInt(id),
+      });
+
+      try {
+        const response = await apiService.postVote({
+          user_id: user.id,
+          poll_id: poll.id,
+          option_id: parseInt(id),
+        });
+
+        setShowPollOverlay(false);
+      } catch (error) {
+        console.error(error);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
+
+  useEffect(() => {
+    if (streamData && user && user.id && streamData.user_id === user.id) {
+      navigate(`/dashboard/${streamid}`);
+    }
+  }, [streamData, user]);
 
   useEffect(() => {
     async function fetchStream() {
@@ -79,6 +148,20 @@ export default function () {
   }, [streamid]);
 
   useEffect(() => {
+    let interval = null;
+
+    if (!canSendMessage && cooldownTimer > 0) {
+      interval = setInterval(() => {
+        setCooldownTimer((prevTimer) => prevTimer - 1);
+      }, 1000);
+    }
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [canSendMessage, cooldownTimer]);
+
+  useEffect(() => {
     joinRoom(room);
   }, [room, joinRoom]);
 
@@ -86,20 +169,23 @@ export default function () {
     socket.on("receive_message", (data) => {
       setMessages((prevMessages) => [
         ...prevMessages,
-        { message: data.message, user: data.user },
+        { message: data.message, username: data.username },
       ]);
     });
 
     // Viewer-side
     socket.on("receive_question", (questionData) => {
+      setShowQandAOverlay(true);
       setQuestion(questionData);
-      setRemainingTime(30); // Set the duration to 60 seconds
+
+      setRemainingTime(30);
     });
 
     // Viewer-side
     socket.on("receive_poll", (questionData) => {
+      setShowPollOverlay(true);
       setPoll(questionData);
-      setRemainingTime(30); // Set the duration to 60 seconds
+      setRemainingTime(30);
     });
   }, []);
 
@@ -121,7 +207,34 @@ export default function () {
       setPoll(null);
     }
   }, [remainingTime]);
-  console.log(vote);
+
+  useEffect(() => {
+    const fetchMessages = async () => {
+      try {
+        const response = await apiService.getMessagesFromStream(streamid);
+        const fetchedMessages = await response.data; // Assuming response.data is the array of objects
+        fetchedMessages.forEach((message) => {
+          setMessages((prevMessages) => [...prevMessages, message]);
+        });
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchMessages();
+  }, [streamid]);
+
+  const handleVote = async (optionId, option) => {
+    try {
+      await setChosenOptionID(optionId);
+
+      setVote(option);
+      await sendVote(option);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div className="stream">
       <div className="stream-left">
@@ -147,13 +260,15 @@ export default function () {
                   className="choice-input"
                   id={index}
                   onClick={() => {
-                    setVote(option);
-                    sendVote(option);
+                    setChosenOptionID(option.id);
+                    setVote(option.option);
+                    sendVote(option.option, option.id);
                   }}
                 >
-                  {option}
+                  {option.option}
                 </button>
               ))}
+
               <p class="remaining-time">
                 {" "}
                 Remaining Time: {remainingTime} seconds
@@ -184,11 +299,13 @@ export default function () {
                   setAnswer(e.target.value);
                 }}
               ></input>
-              <input
+              <button
                 type="submit"
                 className="answer-sent"
                 onClick={sendAnswer}
-              ></input>
+              >
+                Sturen
+              </button>
               <p class="remaining-time">
                 Remaining Time: {remainingTime} seconds
               </p>
@@ -200,10 +317,6 @@ export default function () {
         <div className="stream-bottom-left">
           <h1 className="stream-title">{streamData.title}</h1>
 
-          <div className="streamer">
-            <img className="streamer-streamerimg" src={stockimage} />
-            <h2 className="streamer-streamername">Rayan Khyare</h2>
-          </div>
           <h3 className="stream-beschrijvingtitle">Beschrijving</h3>
           <p className="stream-beschrijving">{streamData.description}</p>
         </div>
@@ -218,11 +331,11 @@ export default function () {
               <p className="no-messages">Nog geen berichten</p>
             ) : (
               messages.map((msg, index) => {
-                if (msg.user === user.username) {
+                if (msg.username === user.username) {
                   return (
                     <SentMessage
                       key={index}
-                      user={msg.user === "" ? "Anoniem" : msg.user}
+                      user={msg.username}
                       time={new Date().toLocaleTimeString()}
                       message={msg.message}
                     />
@@ -231,7 +344,7 @@ export default function () {
                   return (
                     <ReceivedMessage
                       key={index}
-                      user={msg.user}
+                      user={msg.username}
                       time={new Date().toLocaleTimeString()}
                       message={msg.message}
                     />
@@ -240,7 +353,7 @@ export default function () {
               })
             )}
           </div>
-          <div>
+          <div className="inputbigcontainer">
             <div className="input-container">
               <input
                 className="sentmessage-input"
@@ -251,7 +364,7 @@ export default function () {
               />
             </div>
             <button className="sentmessage-btn" onClick={sendMessage}>
-              Sturen
+              {canSendMessage ? "Sturen" : `Wachten (${cooldownTimer})`}
             </button>
           </div>
         </div>

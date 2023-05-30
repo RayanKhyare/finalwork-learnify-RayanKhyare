@@ -1,18 +1,23 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import apiService from "../services/apiService";
 import stockimage from "../../assets/stockimage_man.jpg";
 import Video from "../services/videoService";
 import Thumbnail from "../services/thumbnailService";
+import rechten from "../../assets/rechten.jpeg";
 
 import "./bladeren.scss";
 import Navigation from "../Navigation/Navigation";
-
+import { getProfilePicture } from "../services/profilePicService";
+import { UserContext } from "../../App";
 export default function Bladeren() {
   const [activeLink, setActiveLink] = useState("livestreams");
   const [streams, setStreams] = useState([]);
   const [videos, setVideos] = useState([]);
+  const [category, setCategory] = useState([]);
+  const { user } = useContext(UserContext);
 
+  const navigate = useNavigate();
   useEffect(() => {
     async function fetchAllStreams() {
       try {
@@ -28,6 +33,7 @@ export default function Bladeren() {
           const streamWithUsername = {
             ...stream,
             username: username,
+            profile_pic: userResponse.data.profile_pic,
           };
 
           streamsWithUsernames.push(streamWithUsername);
@@ -57,6 +63,7 @@ export default function Bladeren() {
           const videoWithUsername = {
             ...video,
             username: username,
+            profile_pic: userResponse.data.profile_pic,
           };
 
           videosWithUsernames.push(videoWithUsername);
@@ -71,8 +78,35 @@ export default function Bladeren() {
     fetchAllVideos();
   }, [location]);
 
+  useEffect(() => {
+    async function fetchAllCategories() {
+      try {
+        const response = await apiService.getCategories();
+        console.log(response.data);
+
+        setCategory(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    fetchAllCategories();
+  }, [location]);
+
   const handleLinkClick = (link) => {
     setActiveLink(link);
+  };
+
+  const handleStreamClick = (id) => {
+    navigate("/stream/" + id);
+  };
+
+  const handleVideoClick = (id) => {
+    navigate("/video/" + id);
+  };
+
+  const handleCategoryClick = (id) => {
+    navigate("/categories/" + id);
   };
 
   return (
@@ -124,7 +158,10 @@ export default function Bladeren() {
                 <Thumbnail url={stream.iframe} />
                 <h2 className="stream-title">{stream.title}</h2>
                 <div className="streamerinfo">
-                  <img src={stockimage} className="streamer-img" />
+                  <img
+                    src={getProfilePicture(stream && stream.profile_pic)}
+                    className="streamer-img"
+                  />
                   <h3 className="streamer-username">{stream.username}</h3>
                 </div>
               </div>
@@ -136,7 +173,22 @@ export default function Bladeren() {
             activeLink === "categorieen" ? "active" : "hidden"
           }`}
         >
-          Categorieën
+          {category.length === 0 ? (
+            <p className="no-messages">
+              Er zijn nog geen categorieen beschikbaar
+            </p>
+          ) : (
+            category &&
+            category.map((category, index) => (
+              <div
+                className="categorycontainer"
+                onClick={() => handleCategoryClick(category.id)}
+              >
+                <img src={category.image_url} className="category-image" />
+                <h1 className="category-title">{category.name}</h1>
+              </div>
+            ))
+          )}
         </div>
         <div
           className={`videos-container ${
@@ -151,12 +203,15 @@ export default function Bladeren() {
               <div
                 className="streamcontainer"
                 key={index}
-                onClick={() => handleStreamClick(video.id)}
+                onClick={() => handleVideoClick(video.id)}
               >
                 <Thumbnail url={video.iframe} />
                 <h2 className="stream-title">{video.title}</h2>
                 <div className="streamerinfo">
-                  <img src={stockimage} className="streamer-img" />
+                  <img
+                    src={getProfilePicture(video && video.profile_pic)}
+                    className="streamer-img"
+                  />
                   <h3 className="streamer-username">{video.username}</h3>
                 </div>
               </div>

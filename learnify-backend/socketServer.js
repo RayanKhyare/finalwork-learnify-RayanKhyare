@@ -5,6 +5,10 @@ const cors = require("cors");
 const app = express();
 const server = http.createServer(app);
 
+const { PrismaClient } = require("@prisma/client");
+const router = require("express").Router();
+const prisma = new PrismaClient();
+
 const io = require("socket.io")(server, {
   cors: {
     origin: "*",
@@ -30,6 +34,8 @@ io.on("connection", (socket) => {
   // Q&A
   socket.on("send_question", (data) => {
     const questionData = {
+      id: data.id,
+      stream: data.stream,
       question: data.question,
       timestamp: new Date().getTime(), // Get current timestamp
     };
@@ -42,6 +48,7 @@ io.on("connection", (socket) => {
 
   // Poll
   socket.on("send_poll", (data) => {
+    console.log(data);
     io.to(data.room).emit("receive_poll", data);
   });
 

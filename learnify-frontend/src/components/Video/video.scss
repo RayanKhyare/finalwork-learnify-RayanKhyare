@@ -1,0 +1,187 @@
+@import "../../utilities/variables";
+
+.video {
+  width: 100%;
+  padding-bottom: 50px;
+  .featuredstream-iframe {
+    width: 100%;
+    max-height: 75vh;
+    height: 65vh;
+    border-radius: 15px;
+  }
+
+  .video-bottom {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .video-bottom-header {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      margin-top: 25px;
+      .video-title {
+        font-family: "Sora", sans-serif;
+        font-size: 2em;
+        font-weight: 600;
+        color: $text-color;
+      }
+      .buttons {
+        display: flex;
+        align-items: center;
+        .wijzigenbtn {
+          background-color: $blue;
+          padding: 10px;
+          width: 50px; /* Set the width equal to the desired height to make the button a square */
+          height: 50px; /* Set the height equal to the desired width to make the button a square */
+          border: none;
+          border-radius: 10px;
+          font-size: 1.2em;
+          color: $background-color;
+          font-family: "Sora";
+          cursor: pointer;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin-right: 15px;
+          &:hover {
+            scale: 1.05;
+            transition: 0.2s ease;
+          }
+          .checkmark-img {
+            display: block; /* Ensures that the image does not create any additional space */
+            width: 100%; /* Makes the image take up the full width of the button */
+            height: auto;
+          }
+          .pen-img {
+            display: block; /* Ensures that the image does not create any additional space */
+            width: 100%; /* Makes the image take up the full width of the button */
+            height: auto;
+          }
+        }
+        .redirect-link {
+          width: 72.57px;
+          height: 60.64px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: #ffd6c2;
+          border-radius: 15px;
+          border: none;
+
+          .ytb-icon {
+            cursor: pointer;
+          }
+
+          .ytb-icon:hover {
+            scale: 1.05;
+            transition: ease-in-out 0.3s;
+          }
+        }
+      }
+    }
+
+    .beschrijving-title {
+      font-family: "Sora", sans-serif;
+      font-size: 1.6em;
+      font-weight: 500;
+      color: $text-color;
+    }
+
+    .beschrijving {
+      font-family: "Sora", sans-serif;
+      font-size: 1em;
+      font-weight: 400;
+      color: $text-color;
+      margin-top: 15px;
+      width: 50%;
+      line-height: 1.4;
+    }
+  }
+}
+
+.beschrijvingupdatediv {
+  display: flex;
+  flex-direction: column;
+  margin-top: 15px;
+  width: 75%;
+  .beschrijving-label {
+    margin-top: 15px;
+    font-size: 1.3em;
+    font-family: "Sora", sans-serif;
+    font-weight: 600;
+    color: $text-color;
+  }
+
+  .beschrijving-input {
+    margin-top: 15px;
+    padding: 60px 150px;
+    padding-left: 5px;
+    padding-top: 5px;
+    padding-right: 5px;
+    border-radius: 10px;
+
+    border: 1px solid $text-color;
+    font-family: "Sora", sans-serif;
+    font-size: 1.2em;
+  }
+}
+
+.titelupdatediv {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  .titel-label {
+    font-size: 1.6em;
+    font-family: "Sora", sans-serif;
+    color: $text-color;
+  }
+
+  .title-input {
+    padding: 11px 150px;
+    padding-left: 5px;
+    padding-right: 5px;
+    width: 35%;
+    border-radius: 10px;
+    border: 1px solid #192440;
+    font-family: "Sora", sans-serif;
+    font-size: 1.2em;
+  }
+}
+
+.deletebtn {
+  background-color: $orange;
+  padding: 10px;
+  width: 50px; /* Set the width equal to the desired height to make the button a square */
+  height: 50px; /* Set the height equal to the desired width to make the button a square */
+  border: none;
+  border-radius: 10px;
+  font-size: 1.2em;
+  color: $background-color;
+  font-family: "Sora";
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 15px;
+  &:hover {
+    scale: 1.05;
+    transition: 0.2s ease;
+  }
+  .trash-img {
+    display: block; /* Ensures that the image does not create any additional space */
+    width: 100%; /* Makes the image take up the full width of the button */
+    height: auto;
+    filter: invert(99%) sepia(70%) saturate(4917%) hue-rotate(184deg)
+      brightness(125%) contrast(89%);
+  }
+}
+
+.no-messages {
+  font-size: 1em;
+  font-family: "Sora", sans-serif;
+  color: $text-color;
+  text-align: center;
+  margin-top: 15px;
+}

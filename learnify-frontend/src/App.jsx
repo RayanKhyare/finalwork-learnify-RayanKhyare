@@ -14,6 +14,9 @@ import Stream from "./components/Stream/Stream";
 import Dashboard from "./components/Dashboard/Dashboard";
 import Bladeren from "./components/Bladeren/Bladeren";
 import Navigation from "./components/Navigation/Navigation";
+import VideoPage from "./components/Video/VideoPage";
+import Profile from "./components/Profile/Profile";
+import Categories from "./components/Categories/Categories";
 
 import ProtectedRoute from "./components/services/ProtectedRoute";
 import IfLoggedRoute from "./components/services/IfLoggedRoute";
@@ -70,13 +73,11 @@ function App() {
     <UserContext.Provider value={{ user }}>
       <Router>
         {showFirstVisit && <FirstVisit />}
-        {/* Conditionally render FirstVisit */}
+
         <div className="App">
           <Header />
           <Routes>
-            {/* <Route path="/stream/:streamid/" element={<ProtectedRoute />}> */}
             <Route path="/stream/:streamid/" element={<Stream />} />
-            {/* </Route> */}
 
             <Route path="/" element={<Main />} />
 
@@ -86,9 +87,9 @@ function App() {
             <Route path="/register" element={<IfLoggedRoute />}>
               <Route path="/register" element={<Register />} />
             </Route>
-            {/* <Route path="/main" element={<ProtectedRoute />}> */}
+
             <Route path="/main" element={<Main />} />
-            {/* </Route> */}
+
             <Route path="/startstream" element={<ProtectedRoute />}>
               <Route path="/startstream" element={<AddStream />} />
             </Route>
@@ -97,8 +98,16 @@ function App() {
               <Route path="/addvideo" element={<AddVideo />} />
             </Route>
 
+            <Route path="/video/:videoid" element={<VideoPage />} />
+
+            <Route path="/categories/:categoryid" element={<Categories />} />
+
             <Route path="/dashboard/:streamid/" element={<ProtectedRoute />}>
               <Route path="/dashboard/:streamid/" element={<Dashboard />} />
+            </Route>
+
+            <Route path="/profile/:userid/" element={<ProtectedRoute />}>
+              <Route path="/profile/:userid/" element={<Profile />} />
             </Route>
 
             <Route path="/bladeren" element={<Bladeren />} />

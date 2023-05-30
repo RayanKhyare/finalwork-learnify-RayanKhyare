@@ -5,7 +5,7 @@
   display: flex;
   padding: 0;
   .stream-left {
-    width: 78.5%;
+    width: 82.5%;
     display: flex;
     flex-direction: column;
     padding-right: 25px;
@@ -60,6 +60,9 @@
           border-radius: 15px;
           border: none;
           width: 95%;
+          font-family: "Sora", sans-serif;
+          padding-left: 15px;
+          font-size: 1.1em;
         }
 
         .answer-sent {
@@ -71,6 +74,11 @@
           font-family: "Sora", sans-serif;
           padding: 10px 50px;
           border-radius: 10px;
+          cursor: pointer;
+          &:hover {
+            background-color: $orange;
+            color: $text-color;
+          }
         }
 
         .remaining-time {
@@ -157,10 +165,24 @@
     }
     .stream-title {
       font-family: "Sora", sans-serif;
-      font-size: 2.3em;
+      font-size: 2em;
       font-weight: 600;
       margin-top: 30px;
       color: $text-color;
+
+      position: relative;
+      display: inline-block;
+
+      &::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 60%;
+        width: 105%;
+        height: 18px; /* Adjust the height as needed */
+        background-color: $orange; /* Adjust the color as needed */
+        z-index: -1;
+      }
     }
     .streamer {
       display: flex;
@@ -184,17 +206,18 @@
       font-size: 1.5em;
       font-family: "Sora", sans-serif;
       color: $text-color;
+      font-weight: 500;
     }
     .stream-beschrijving {
-      font-family: "Sora", sans-serif;
+      font-family: "SF Pro Text", sans-serif;
       color: $text-color;
       width: 50%;
       padding-top: 10px;
-      font-weight: 500;
+      font-weight: 400;
     }
   }
   .chat-container {
-    width: 25%;
+    width: 22%;
     display: flex;
     flex-direction: column;
     position: absolute;
@@ -203,9 +226,10 @@
 
     .chat-top {
       width: 100%;
-      height: 7.5%;
+      height: 5%;
       display: flex;
       align-items: center;
+      padding: 15px 0px;
       justify-content: center;
       color: $background-color;
       background-color: $text-color;
@@ -218,17 +242,18 @@
     }
 
     .chat-bottom {
-      height: 100%;
+      height: 75vh;
       border: 1px solid #31abdb;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      padding: 0px 25px;
+      padding: 0px 0px 0px 25px;
       background-color: $background-color;
       .message-container {
         display: flex;
         flex-direction: column;
-
+        overflow: scroll;
+        overflow-x: hidden;
         .no-messages {
           width: 100%;
           text-align: center;
@@ -276,7 +301,7 @@
           margin-top: 25px;
 
           float: right;
-          align-self: flex-end;
+          align-self: flex-start;
 
           .sendmessage-top {
             display: flex;
@@ -299,7 +324,9 @@
             padding: 10px 25px;
             border-bottom-right-radius: 15px;
             border-bottom-left-radius: 15px;
-            border-top-left-radius: 15px;
+
+            border-top-right-radius: 15px;
+            border-top-left-radius: 0px;
             margin-top: 5px;
             .sendmessage-message {
               padding-right: 25px;
@@ -310,33 +337,37 @@
           }
         }
       }
-      .input-container {
-        width: 100%;
-        background-color: #a7dfff;
-        border: 1px solid #31abdb;
-        border-radius: 10px;
-        margin: 15px 0px;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        .sentmessage-input {
-          color: $text-color;
-          background-color: #a7dfff;
-          border: none;
-          border-radius: 10px;
-          padding: 20px 0px;
-          padding-left: 25px;
 
-          font-family: "Sora", sans-serif;
-          font-weight: 500;
-          font-size: 1em;
-        }
-        .sentmessage-input::placeholder {
-          color: $text-color;
-          font-family: "Sora", sans-serif;
-        }
-        .sentmessage-btn {
-          margin-right: 25px;
+      .inputbigcontainer {
+        padding-right: 25px;
+        .input-container {
+          width: 100%;
+          background-color: #a7dfff;
+          border: 1px solid #31abdb;
+          border-radius: 10px;
+          margin: 15px 0px;
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          .sentmessage-input {
+            color: $text-color;
+            background-color: #a7dfff;
+            border: none;
+            border-radius: 10px;
+            padding: 20px 0px;
+            padding-left: 25px;
+
+            font-family: "Sora", sans-serif;
+            font-weight: 500;
+            font-size: 1em;
+          }
+          .sentmessage-input::placeholder {
+            color: $text-color;
+            font-family: "Sora", sans-serif;
+          }
+          .sentmessage-btn {
+            margin-right: 25px;
+          }
         }
       }
     }

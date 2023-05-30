@@ -1,0 +1,220 @@
+@import "../../utilities/variables";
+
+.categories {
+  .categories-header {
+    display: flex;
+
+    .categories-image {
+      width: 15%;
+      height: 40vh;
+      object-fit: cover;
+      border-radius: 15px;
+    }
+
+    .categories-header-right {
+      display: flex;
+      flex-direction: column;
+      color: $text-color;
+      margin-left: 25px;
+      .categories-title {
+        font-size: 2.5em;
+        font-family: "Sora", sans-serif;
+        font-weight: 500;
+      }
+
+      .categories-description {
+        width: 50%;
+        font-size: 1.2em;
+        font-family: "Sora", sans-serif;
+        font-weight: 500;
+        margin-top: 25px;
+      }
+    }
+  }
+  .bladeren-nav {
+    display: flex;
+    margin-top: 25px;
+    .active {
+      position: relative;
+      display: inline-block;
+    }
+
+    .active::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 60%;
+      width: 105%;
+      height: 18px; /* Adjust the height as needed */
+      background-color: $orange; /* Adjust the color as needed */
+      z-index: -1;
+    }
+    .bladeren-link {
+      font-size: 1.8em;
+      font-family: "Sora", sans-serif;
+      color: $text-color;
+      font-weight: 500;
+      cursor: pointer;
+    }
+    .categorieen {
+      margin-left: 40px;
+    }
+    .videos {
+      margin-left: 40px;
+    }
+  }
+
+  .content-container {
+    width: 100%;
+    margin-top: 25px;
+    .livestreams-container {
+      display: flex;
+      flex-wrap: wrap;
+
+      .no-messages {
+        width: 100%;
+        text-align: center;
+        font-family: "Sora", sans-serif;
+        font-size: 1.6em;
+        font-weight: 600;
+        margin-top: 50px;
+      }
+      .streamcontainer {
+        width: calc(100% / 4);
+        padding: 10px;
+        padding-left: 0px;
+        cursor: pointer;
+
+        .featuredstream-thumbnail {
+          border-radius: 15px;
+          width: 100%;
+          height: 70%;
+          object-fit: cover;
+        }
+
+        .stream-title {
+          margin-top: 10px;
+          color: $text-color;
+          font-weight: 500;
+          font-size: 1.4em;
+          font-family: "Sora", sans-serif;
+          width: 100%;
+        }
+
+        .streamerinfo {
+          margin-top: 10px;
+          display: flex;
+          align-items: center;
+          .streamer-img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            object-fit: cover;
+          }
+
+          .streamer-username {
+            font-size: 1em;
+            font-family: "Sora", sans-serif;
+            margin-left: 10px;
+            color: $smalltext-color;
+            font-weight: 300;
+          }
+        }
+      }
+    }
+
+    .categorieen-container {
+      display: flex;
+      flex-wrap: wrap;
+
+      // .categorycontainer:nth-child(7n) {
+      //   padding-left: 0px;
+      // }
+
+      .categorycontainer {
+        width: calc(100% / 6 - 20px);
+        padding: 10px;
+        margin-top: 15px;
+        .category-image {
+          width: 100%;
+          height: 40vh;
+          object-fit: cover;
+          top: 50%;
+          left: 50%;
+          border-radius: 15px;
+
+          &::after {
+            background: linear-gradient(
+              0deg,
+              rgba(0, 0, 0, 0.4) -43.41%,
+              rgba(0, 0, 0, 0) 121.36%
+            );
+          }
+        }
+
+        .category-title {
+          margin-top: 10px;
+          font-size: 1.4em;
+          font-family: "Sora";
+          font-weight: 500;
+        }
+      }
+    }
+
+    .videos-container {
+      display: flex;
+      flex-wrap: wrap;
+
+      .no-messages {
+        width: 100%;
+        text-align: center;
+        font-family: "Sora", sans-serif;
+        font-size: 1.6em;
+        font-weight: 600;
+        margin-top: 50px;
+      }
+      .streamcontainer {
+        width: calc(100% / 4);
+        padding: 10px;
+        padding-left: 0px;
+        cursor: pointer;
+
+        .featuredstream-thumbnail {
+          border-radius: 15px;
+          width: 100%;
+          height: 70%;
+          object-fit: cover;
+        }
+
+        .stream-title {
+          margin-top: 10px;
+          color: $text-color;
+          font-weight: 500;
+          font-size: 1.4em;
+          font-family: "Sora", sans-serif;
+          width: 100%;
+        }
+
+        .streamerinfo {
+          margin-top: 10px;
+          display: flex;
+          align-items: center;
+          .streamer-img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            object-fit: cover;
+          }
+
+          .streamer-username {
+            font-size: 1em;
+            font-family: "Sora", sans-serif;
+            margin-left: 10px;
+            color: $smalltext-color;
+            font-weight: 300;
+          }
+        }
+      }
+    }
+  }
+}

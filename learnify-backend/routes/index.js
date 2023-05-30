@@ -8,6 +8,9 @@ const userRoute = require("./user");
 const answerRoute = require("./answers");
 const questionRoute = require("./questions");
 const videoRoute = require("./videos");
+const categoryRoute = require("./categories");
+const messageRoute = require("./messages");
+const pollRoute = require("./polls");
 
 router.use("/auth", authRoute);
 router.use("/posts", postRoute);
@@ -16,5 +19,8 @@ router.use("/users", userRoute);
 router.use("/answers", answerRoute);
 router.use("/questions", questionRoute);
 router.use("/videos", videoRoute);
+router.use("/categories", categoryRoute);
+router.use("/messages", messageRoute);
+router.use("/polls", pollRoute);
 
 module.exports = router;

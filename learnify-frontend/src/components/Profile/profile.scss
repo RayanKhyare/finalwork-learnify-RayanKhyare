@@ -1,0 +1,214 @@
+@import "../../utilities/variables";
+
+.profile {
+  width: 100%;
+  padding-bottom: 50px;
+  .gradient {
+    width: 100%;
+    background: linear-gradient(180deg, #bdb3ff 0%, rgba(153, 0, 0, 0) 100%);
+    border-radius: 15px;
+    height: 40vh;
+    position: relative;
+
+    .userinfo {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%) translateY(75px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      width: 100%;
+      .profilepicture {
+        width: 10%;
+      }
+
+      .username {
+        padding-top: 15px;
+        font-size: 2em;
+        font-family: "Sora";
+        color: $text-color;
+        font-weight: 700;
+      }
+    }
+  }
+  .middle {
+    width: 100%;
+    height: 10vh;
+    margin-top: 15px;
+  }
+  .profile-main {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+    .main-left {
+      width: calc(100% / 3);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      font-family: "Sora";
+      color: $text-color;
+      .main-left-title {
+        font-size: 1.2em;
+        font-weight: 700;
+      }
+
+      .main-left-content {
+        display: flex;
+        align-items: center;
+        margin-top: 15px;
+        .profilepicture {
+          width: 100px;
+          margin-left: 20px;
+        }
+
+        .binnenkort {
+          margin-left: 25px;
+          font-weight: 300;
+        }
+      }
+    }
+
+    .main-middle {
+      width: calc(100% / 3);
+      display: flex;
+      flex-direction: column;
+      font-family: "Sora";
+      .username,
+      .email,
+      .password {
+        display: flex;
+        flex-direction: column;
+
+        .label {
+          font-size: 1.2em;
+          margin-bottom: 15px;
+        }
+        .input {
+          width: 100%;
+          height: 45px;
+          padding-left: 15px;
+          border: 3px solid #192440;
+          border-radius: 10px;
+          font-family: "Sora";
+        }
+      }
+
+      .username,
+      .email {
+        margin-bottom: 25px;
+      }
+      .aanpassenbtn {
+        font-family: "Poppins";
+        font-style: normal;
+        font-weight: 400;
+        font-size: 20px;
+        line-height: 30px;
+        color: $background-color;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 40px;
+        width: 25%;
+        text-align: center;
+        background: #31abdb;
+        border-radius: 7px;
+        border: none;
+        cursor: pointer;
+        margin-top: 25px;
+      }
+      .accountverwijderen {
+        text-align: right;
+        font-family: "Sora";
+        font-weight: 300;
+        color: #494949;
+        cursor: pointer;
+      }
+    }
+
+    .main-right {
+      width: calc(100% / 3);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+
+      .main-right-title {
+        font-size: 1.2em;
+        font-weight: 700;
+        font-family: "Sora", sans-serif;
+        color: $text-color;
+      }
+
+      .main-right-content {
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        .streamcontainer {
+          padding: 10px;
+          padding-left: 0px;
+          cursor: pointer;
+          &:hover {
+            scale: 1.02;
+            transition: 0.2s ease;
+          }
+          .featuredstream-thumbnail {
+            border-radius: 10px;
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            filter: drop-shadow(-5px 4px 8px rgba(0, 0, 0, 0.25));
+          }
+
+          .stream-title {
+            margin-top: 10px;
+            color: $text-color;
+            font-weight: 500;
+            font-size: 1em;
+            font-family: "Sora", sans-serif;
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+}
+
+.aanpassen {
+  font-size: 1.2em;
+  margin-top: 25px;
+  color: $text-color;
+}
+.avatar {
+  font-family: "Sora", sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .kiesavatar {
+    font-size: 1.5em;
+    color: $text-color;
+    font-weight: 600;
+  }
+
+  .avatar-container {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    .avatar-icon {
+      width: 75px;
+      margin: 15px;
+
+      border-radius: 50%;
+      cursor: pointer;
+    }
+    .active {
+      border: 3px solid $orange;
+      border-radius: 50%;
+    }
+  }
+}

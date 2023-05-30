@@ -47,4 +47,27 @@ router.get("/stream/:streamId", async (req, res) => {
   }
 });
 
+router.delete("/:questionId", async (req, res) => {
+  const { questionId } = req.params;
+
+  try {
+    // Delete the answers associated with the question
+    await prisma.answers.deleteMany({
+      where: { question_id: parseInt(questionId) },
+    });
+
+    // Delete the question
+    await prisma.questions.delete({
+      where: {
+        id: parseInt(questionId),
+      },
+    });
+
+    res.sendStatus(200);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal server error");
+  }
+});
+
 module.exports = router;

@@ -5,6 +5,7 @@ const Joi = require("joi");
 const registerValidation = (data) => {
   const userSchema = Joi.object({
     role: Joi.number(),
+    profile_pic: Joi.number().required(),
     username: Joi.string().min(3).required(),
     email: Joi.string().min(6).required().email(),
     password: Joi.string().min(6).required(),
@@ -43,7 +44,18 @@ const videoValidation = (data) => {
   return videoSchema.validate(data);
 };
 
+const updateValidation = (data) => {
+  const updateSchema = Joi.object({
+    username: Joi.string().min(3).required(),
+    email: Joi.string().min(6).required().email(),
+    password: Joi.string().min(6).required(),
+    profile_pic: Joi.number().required(),
+  });
+  return updateSchema.validate(data);
+};
+
 module.exports.registerValidation = registerValidation;
 module.exports.loginValidation = loginValidation;
 module.exports.streamValidation = streamValidation;
 module.exports.videoValidation = videoValidation;
+module.exports.updateValidation = updateValidation;

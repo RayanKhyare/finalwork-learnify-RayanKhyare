@@ -5,7 +5,7 @@ import landingimg from "../../assets/landing_img.png";
 import search from "../../assets/search.svg";
 import hand from "../../assets/hand.svg";
 import people from "../../assets/people.svg";
-
+import { getProfilePicture } from "../services/profilePicService";
 export default function FirstVisit() {
   const [showFirstPopup, setShowFirstPopup] = useState(true);
   const [showSecondPopup, setShowSecondPopup] = useState(false);

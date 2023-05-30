@@ -17,102 +17,114 @@ model Roles {
   Users Users[]
 }
 
-// Define Poll_votes table
-model Poll_votes {
-  id        Int         @id @default(autoincrement())
-  user_id   Int
-  poll_id   Int
-  option_id Int
-  user      Users       @relation(fields: [user_id], references: [id])
-  poll      Polls       @relation(fields: [poll_id], references: [id])
-  option    Poll_option @relation(fields: [option_id], references: [id])
-}
-
 // Define questions table
 model questions {
   id        Int       @id @default(autoincrement())
-  stream_id Int
+  stream_id Int?
   question  String
   time      Int
-  stream    Streams   @relation(fields: [stream_id], references: [id])
+  stream    Streams?  @relation(fields: [stream_id], references: [id])
   answers   answers[]
 }
 
 // Define Users table
 model Users {
-  id         Int          @id @default(autoincrement())
-  role       Int
-  username   String
-  email      String       @unique
-  password   String
-  role_rel   Roles        @relation(fields: [role], references: [id])
-  streams    Streams[]
-  Poll_votes Poll_votes[]
-  answers    answers[]
-  videos     Videos[]
+  id          Int          @id @default(autoincrement())
+  role        Int?
+  profile_pic Int?
+  username    String
+  email       String       @unique
+  password    String
+  role_rel    Roles?       @relation(fields: [role], references: [id])
+  streams     Streams[]
+  Poll_votes  Poll_votes[]
+
+  videos Videos[]
+}
+
+model Messages {
+  id        Int      @id @default(autoincrement())
+  username  String?
+  stream_id Int?
+  message   String
+  stream    Streams? @relation(fields: [stream_id], references: [id])
 }
 
 model Category {
-  id          Int       @id @default(autoincrement())
-  name        String
-  streams     Streams[]
-  category_id Int       @default(1)
-  videos      Videos[]
+  id           Int       @id @default(autoincrement())
+  name         String
+  image_url    String?
+  beschrijving String?
+  streams      Streams[]
+  videos       Videos[]
 }
 
 // Define Streams table
 model Streams {
   id          Int         @id @default(autoincrement())
-  user_id     Int
-  category_id Int
+  user_id     Int?
+  category_id Int?
   room_id     Int
   title       String
   description String
   iframe      String
-  user        Users       @relation(fields: [user_id], references: [id])
+  user        Users?      @relation(fields: [user_id], references: [id])
   polls       Polls[]
-  category    Category    @relation(fields: [category_id], references: [id])
+  category    Category?   @relation(fields: [category_id], references: [id])
   questions   questions[]
+  messages    Messages[]
+  answers     answers[]
 }
 
 // Define Polls table
 model Polls {
-  id            Int           @id @default(autoincrement())
-  stream_id     Int
-  poll_question String
-  time          Int
-  stream        Streams       @relation(fields: [stream_id], references: [id])
-  options       Poll_option[]
-  votes         Poll_votes[]
+  id        Int           @id @default(autoincrement())
+  stream_id Int?
+  question  String
+  options   Poll_option[]
+  votes     Poll_votes[]
+  stream    Streams?      @relation(fields: [stream_id], references: [id])
 }
 
 // Define answers table
-model answers {
-  id          Int       @id @default(autoincrement())
-  question_id Int
-  user_id     Int
-  answer      String
-  question    questions @relation(fields: [question_id], references: [id])
-  user        Users     @relation(fields: [user_id], references: [id])
-}
-
 // Define Poll_option table
 model Poll_option {
   id      Int          @id @default(autoincrement())
-  poll_id Int
+  poll_id Int?
   option  String
-  poll    Polls        @relation(fields: [poll_id], references: [id])
+  poll    Polls?       @relation(fields: [poll_id], references: [id])
   votes   Poll_votes[]
+}
+
+// Define Poll_votes table
+model Poll_votes {
+  id        Int          @id @default(autoincrement())
+  user_id   Int?
+  poll_id   Int?
+  option_id Int?
+  user      Users?       @relation(fields: [user_id], references: [id])
+  poll      Polls?       @relation(fields: [poll_id], references: [id])
+  option    Poll_option? @relation(fields: [option_id], references: [id])
+}
+
+model answers {
+  id          Int        @id @default(autoincrement())
+  stream_id   Int?
+  question_id Int?
+  username    String
+  answer      String
+  stream      Streams?   @relation(fields: [stream_id], references: [id])
+  question    questions? @relation(fields: [question_id], references: [id])
 }
 
 // Define Streams table
 model Videos {
-  id          Int      @id @default(autoincrement())
-  user_id     Int
-  category_id Int
+  id          Int       @id @default(autoincrement())
+  user_id     Int?
+  category_id Int?
   title       String
   description String
   iframe      String
-  user        Users    @relation(fields: [user_id], references: [id])
-  category    Category @relation(fields: [category_id], references: [id])
+  user        Users?    @relation(fields: [user_id], references: [id])
+  category    Category? @relation(fields: [category_id], references: [id])
 }

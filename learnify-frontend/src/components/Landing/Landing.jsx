@@ -5,7 +5,7 @@ import search_icon from "../../assets/search.svg";
 import hand from "../../assets/hand.svg";
 import people from "../../assets/people.svg";
 import { useNavigate } from "react-router-dom";
-
+import { getProfilePicture } from "../services/profilePicService";
 export default function Landing() {
   const navigate = useNavigate();
   const handleRedirect = (e) => {

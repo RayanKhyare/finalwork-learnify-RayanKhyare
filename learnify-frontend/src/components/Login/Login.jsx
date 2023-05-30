@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import apiService from "../services/apiService";
 import { useNavigate } from "react-router-dom";
 import "./login.scss";
+// import Spline from "@splinetool/react-spline";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -17,7 +18,7 @@ const Login = () => {
       // redirect to protected route
 
       setTimeout(() => {
-        navigate("/main");
+        window.location.reload();
       }, 100);
     } catch (error) {
       console.error(error);
@@ -35,7 +36,7 @@ const Login = () => {
       <div className="login-left">
         <h2 className="login-title">Welkom terug </h2>
         <form class="login-form" onSubmit={handleSubmit}>
-          {error && <div>{error}</div>}
+          {error && <div className="error">{error}</div>}
 
           <input
             type="email"

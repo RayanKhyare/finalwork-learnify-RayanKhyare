@@ -1,6 +1,9 @@
 import React from "react";
 
 function extractVideoId(url) {
+  if (!url) {
+    return null;
+  }
   const regex =
     /^(?:https?:\/\/)?(?:www\.)?youtu(?:be\.com|\.be)\/(?:watch\?v=|embed\/)?(.+)$/;
 

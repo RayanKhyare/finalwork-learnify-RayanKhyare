@@ -63,27 +63,36 @@
         margin-bottom: 15px;
       }
 
-      .input {
-        padding: 10px 150px;
+      .iframe {
+        width: 315px !important;
+      }
 
+      .input {
+        padding: 10px 0px;
         padding-left: 15px;
-        border: 3px solid $text-color;
+        width: auto;
+        padding-right: 15px;
+        border: 3px solid #192440;
         border-radius: 10px;
         font-weight: 500;
-        color: $text-color;
+        color: #192440;
         font-family: "Sora", sans-serif;
       }
 
       .opleiding-input {
-        width: 25%;
-        padding: 10px 0px;
+        padding: 10px 150px;
+        padding-right: 55px;
         padding-left: 15px;
       }
 
       .textarea {
         width: 25%;
-        padding: 75px 50px;
+
+        width: 400px;
+
+        height: 200px;
         padding-left: 5px;
+        padding-right: 5px;
       }
     }
   }

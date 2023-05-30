@@ -11,24 +11,6 @@
       font-weight: 600;
       color: $text-color;
     }
-
-    .addstream-btn {
-      background-color: $blue;
-      color: white;
-      font-family: "Sora", sans-serif;
-      font-size: 1.5em;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 15px 20px;
-      border-radius: 10px;
-      cursor: pointer;
-      border: none;
-      .checksign {
-        margin-left: 0px;
-        margin-right: 10px;
-      }
-    }
   }
 
   .addstream-description {
@@ -42,6 +24,25 @@
   }
 
   .firstline {
+    display: flex;
+    align-items: center;
+    .checkurlbtn {
+      padding: 14px 75px;
+      padding-right: 15px;
+      padding-left: 15px;
+      border: none;
+      border-radius: 10px;
+      height: fit-content;
+      font-weight: 500;
+      color: $background-color;
+      font-family: "Sora", sans-serif;
+      margin-left: 25px;
+      background-color: $blue;
+      cursor: pointer;
+    }
+  }
+
+  .firstline-vertical {
     display: flex;
   }
   .addstream-form {
@@ -63,9 +64,13 @@
         margin-bottom: 15px;
       }
 
+      .iframe {
+        width: 315px !important;
+      }
+
       .input {
         padding: 10px 150px;
-
+        width: fit-content;
         padding-left: 15px;
         border: 3px solid $text-color;
         border-radius: 10px;
@@ -75,16 +80,47 @@
       }
 
       .opleiding-input {
-        width: 25%;
-        padding: 10px 0px;
+        padding: 10px 150px;
+        padding-right: 55px;
         padding-left: 15px;
       }
 
       .textarea {
         width: 25%;
-        padding: 75px 50px;
+
+        width: 400px;
+
+        height: 200px;
         padding-left: 5px;
+        padding-right: 5px;
+      }
+
+      .max {
+        font-family: "Sora", sans-serif;
+        margin-top: 15px;
+        font-weight: 300;
+        font-size: 0.8em;
+        color: $text-color;
       }
     }
+  }
+}
+
+.addstream-btn {
+  background-color: $blue;
+  color: white;
+  font-family: "Sora", sans-serif;
+  font-size: 1.5em;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  border: none;
+  width: 215px;
+  .checksign {
+    margin-left: 0px;
+    margin-right: 10px;
   }
 }

@@ -7,7 +7,35 @@
 }
 
 body::-webkit-scrollbar {
-  display: none;
+  // display: none;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 8px;
+  cursor: grab;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f100;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: $orange;
+  cursor: grab;
+  border-radius: 15px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: $orange;
+  cursor: grab;
 }
 
 html,

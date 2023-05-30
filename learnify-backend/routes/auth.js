@@ -20,11 +20,12 @@ router.post("/register", async (req, res) => {
   //Hash password
   const salt = await bcrypt.genSalt(10);
   //Create a new user
-  const { role, username, email } = req.body;
+  const { role, profile_pic, username, email } = req.body;
   password = await bcrypt.hash(req.body.password, salt);
   const user = await prisma.users.create({
     data: {
       role,
+      profile_pic,
       username,
       email,
       password,
@@ -63,7 +64,7 @@ router.post("/login", async (req, res) => {
   res.header("auth-token", token).send(token);
 });
 
-router.get("/roles", verify, async (req, res) => {
+router.get("/roles", async (req, res) => {
   const roles = await prisma.roles.findMany();
   res.json(roles);
 });

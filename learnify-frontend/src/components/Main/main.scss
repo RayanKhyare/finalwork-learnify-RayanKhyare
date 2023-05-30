@@ -6,17 +6,18 @@
     width: 100%;
     display: flex;
     height: 40vh;
-
+    padding-bottom: 50px;
+    border-bottom: 1px solid $text-color;
     .featuredstream-container-left {
       width: 60%;
       font-size: 1.2em;
       .featuredstream-streamtitle {
-        font-size: 3em;
+        font-size: 2.5em;
         font-family: "Sora", sans-serif;
         line-height: 1.3;
         color: $text-color;
         width: 100%;
-        font-weight: 500;
+        font-weight: 600;
         cursor: pointer;
       }
       .featuredstream-streamercontainer {
@@ -31,7 +32,7 @@
           padding-right: 10px;
         }
         .featuredstream-streamername {
-          font-size: 1.2em;
+          font-size: 1em;
           font-family: "Sora", sans-serif;
 
           color: $text-color;
@@ -49,19 +50,33 @@
       width: 100%;
       display: flex;
       justify-content: flex-end;
+      position: relative;
+      &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 100px;
+        width: calc(100% + 500px);
+        height: 93%;
+        margin-top: 50px;
+        background-color: $blue;
+        opacity: 1;
+        z-index: -1;
+      }
 
       .featuredstream-iframe {
         width: 80%;
         height: 100%;
         border-radius: 10px;
+        filter: drop-shadow(-5px 4px 8px rgba(0, 0, 0, 0.25));
       }
     }
   }
 
   .allstreams {
     margin-top: 50px;
-    padding-top: 50px;
-    border-top: 1px solid $text-color;
+
+    // border-top: 1px solid $text-color;
     color: $text-color;
     width: 100%;
     .allstreams-title {
@@ -81,15 +96,24 @@
         font-size: 1.6em;
         font-weight: 600;
         margin-top: 50px;
+        margin-bottom: 100px;
       }
       .streamcontainer {
         width: calc(100% / 5);
         padding: 10px;
         padding-left: 0px;
         cursor: pointer;
+
+        &:hover {
+          scale: 1.05;
+          transition: 0.2s ease-in-out;
+        }
         .featuredstream-thumbnail {
           border-radius: 15px;
           width: 100%;
+          height: 58%;
+          object-fit: cover;
+          filter: drop-shadow(-5px 4px 8px rgba(0, 0, 0, 0.25));
         }
 
         .stream-title {
@@ -125,9 +149,8 @@
   }
 
   .allvideos {
-    margin-top: 50px;
     padding-top: 50px;
-    border-top: 1px solid $text-color;
+
     color: $text-color;
     width: 100%;
     .allvideos-title {
@@ -147,15 +170,24 @@
         font-size: 1.6em;
         font-weight: 600;
         margin-top: 50px;
+        margin-bottom: 100px;
       }
       .videocontainer {
         width: calc(100% / 5);
         padding: 10px;
         padding-left: 0px;
         cursor: pointer;
+
+        &:hover {
+          scale: 1.05;
+          transition: 0.2s ease-in-out;
+        }
         .featuredstream-thumbnail {
           border-radius: 15px;
           width: 100%;
+          height: 58%;
+          object-fit: cover;
+          filter: drop-shadow(-5px 4px 8px rgba(0, 0, 0, 0.25));
         }
 
         .video-title {

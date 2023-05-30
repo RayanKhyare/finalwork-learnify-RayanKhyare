@@ -1,19 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import apiService from "../services/apiService";
-import stockimage from "../../assets/stockimage_man.jpg";
 import Video from "../services/videoService";
 import Thumbnail from "../services/thumbnailService";
 
 import "./main.scss";
 import FirstVisit from "../FirstVisitPopUp/FirstVisit";
-
+import { UserContext } from "../../App";
+import { getProfilePicture } from "../services/profilePicService";
 export default function Main() {
   const [featuredStream, setFeaturedStream] = useState({});
   const [allStreams, setAllStreams] = useState([]);
   const [allVideos, setAllVideos] = useState([]);
   const location = useLocation();
   const navigate = useNavigate();
+  const { user } = useContext(UserContext);
 
   useEffect(() => {
     async function fetchFeaturedStream() {
@@ -27,6 +28,7 @@ export default function Main() {
         const featuredStreamWithUsername = {
           ...response.data[0],
           username: featured_user.data.username,
+          profile_pic: featured_user.data.profile_pic,
         };
 
         setFeaturedStream(featuredStreamWithUsername);
@@ -42,18 +44,18 @@ export default function Main() {
     async function fetchAllStreams() {
       try {
         const response = await apiService.getAllStreams();
-        console.log(response.data);
 
         const streamsWithUsernames = [];
 
         for (const stream of response.data) {
           const userResponse = await apiService.getUserById(stream.user_id);
-          console.log(userResponse.data.username);
+
           const username = userResponse.data.username || "Unknown"; // Access username or set it as 'Unknown' if not available
 
           const streamWithUsername = {
             ...stream,
             username: username,
+            profile_pic: userResponse.data.profile_pic,
           };
 
           streamsWithUsernames.push(streamWithUsername);
@@ -72,18 +74,18 @@ export default function Main() {
     async function fetchAllVideos() {
       try {
         const response = await apiService.getAllVideos();
-        console.log(response.data);
 
         const videosWithUsernames = [];
 
         for (const video of response.data) {
           const userResponse = await apiService.getUserById(video.user_id);
-          console.log(userResponse.data.username);
+
           const username = userResponse.data.username || "Unknown"; // Access username or set it as 'Unknown' if not available
 
           const videoWithUsername = {
             ...video,
             username: username,
+            profile_pic: userResponse.data.profile_pic,
           };
 
           videosWithUsernames.push(videoWithUsername);
@@ -97,9 +99,6 @@ export default function Main() {
 
     fetchAllVideos();
   }, [location]);
-
-  console.log(allStreams);
-  console.log(allVideos);
 
   const handleUrl = async (e) => {
     e.preventDefault();
@@ -117,14 +116,19 @@ export default function Main() {
 
   return (
     <div className="main">
-      {featuredStream && (
+      {Object.keys(featuredStream).length !== 0 ? (
         <div className="featuredstream-container">
           <div className="featuredstream-container-left">
             <h1 className="featuredstream-streamtitle" onClick={handleUrl}>
               {featuredStream.description && featuredStream.title}
             </h1>
             <div className="featuredstream-streamercontainer">
-              <img className="featuredstream-streamerimg" src={stockimage} />
+              <img
+                className="featuredstream-streamerimg"
+                src={getProfilePicture(
+                  featuredStream && featuredStream.profile_pic
+                )}
+              />
               <h2 className="featuredstream-streamername">
                 {featuredStream.username && featuredStream.username}
               </h2>
@@ -139,7 +143,10 @@ export default function Main() {
             </div>
           )}
         </div>
+      ) : (
+        ""
       )}
+
       <div className="allstreams">
         <h2 className="allstreams-title">
           <span className="blue">Alle</span> streams
@@ -158,7 +165,10 @@ export default function Main() {
                 <Thumbnail url={stream.iframe} />
                 <h2 className="stream-title">{stream.title}</h2>
                 <div className="streamerinfo">
-                  <img src={stockimage} className="streamer-img" />
+                  <img
+                    src={getProfilePicture(stream && stream.profile_pic)}
+                    className="streamer-img"
+                  />
                   <h3 className="streamer-username">{stream.username}</h3>
                 </div>
               </div>
@@ -185,7 +195,10 @@ export default function Main() {
                 <Thumbnail url={video.iframe} />
                 <h2 className="video-title">{video.title}</h2>
                 <div className="streamerinfo">
-                  <img src={stockimage} className="streamer-img" />
+                  <img
+                    src={getProfilePicture(video && video.profile_pic)}
+                    className="streamer-img"
+                  />
                   <h3 className="streamer-username">{video.username}</h3>
                 </div>
               </div>

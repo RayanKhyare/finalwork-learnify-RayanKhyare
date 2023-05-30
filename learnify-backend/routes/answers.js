@@ -12,12 +12,13 @@ router.get("/", async (req, res) => {
 router.post("/", async (req, res) => {
   //Validate schema
 
-  const { question_id, user_id, answer } = req.body;
+  const { stream_id, question_id, username, answer } = req.body;
 
   const answerBody = await prisma.answers.create({
     data: {
+      stream_id,
       question_id,
-      user_id,
+      username,
       answer,
     },
   });
@@ -25,6 +26,23 @@ router.post("/", async (req, res) => {
     res.send(answerBody);
   } catch {
     res.status(400).send(err);
+  }
+});
+
+router.get("/question/:streamId", async (req, res) => {
+  const { streamId } = req.params;
+
+  try {
+    const answers = await prisma.answers.findMany({
+      where: {
+        stream_id: parseInt(streamId),
+      },
+    });
+
+    res.json(answers);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal server error");
   }
 });
 

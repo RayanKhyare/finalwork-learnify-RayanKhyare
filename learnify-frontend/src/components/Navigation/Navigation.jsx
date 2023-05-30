@@ -5,7 +5,7 @@ import stop from "../../assets/stop.svg";
 import poll from "../../assets/poll.svg";
 import qanda from "../../assets/qanda.svg";
 import "./navigation.scss";
-
+import { getProfilePicture } from "../services/profilePicService";
 import { useNavigate, useLocation } from "react-router-dom";
 
 export default function Navigation() {
