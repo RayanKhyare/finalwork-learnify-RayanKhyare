@@ -5,7 +5,7 @@ import React, {
   useContext,
   createContext,
 } from "react";
-
+import { motion } from "framer-motion";
 import "./dashboard.scss";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import jwt_decode from "jwt-decode";
@@ -30,10 +30,13 @@ import { UserContext } from "../../App";
 
 export default function Dashboard() {
   const { streamid } = useParams();
+  const { user } = useContext(UserContext);
   const [message, setMessage] = useState("");
   const [room, setRoom] = useState("");
   const [messages, setMessages] = useState([]);
   const [streamData, setStreamData] = useState({});
+  const [streamURL, setStreamURL] = useState("");
+  const [streamer, setStreamer] = useState("");
   const [question, setQuestion] = useState("");
 
   const [isEditing, setIsEditing] = useState(false);
@@ -48,8 +51,6 @@ export default function Dashboard() {
   const [option1, setOption1] = useState(null);
   const [option2, setOption2] = useState(null);
   const [vote, setVote] = useState([]);
-  const [option1Count, setOption1Count] = useState(0);
-  const [option2Count, setOption2Count] = useState(0);
 
   const [showQandAOverlay, setShowQandAOverlay] = useState(true);
   const [showPollOverlay, setShowPollOverlay] = useState(true);
@@ -61,18 +62,14 @@ export default function Dashboard() {
   const [canSendMessage, setCanSendMessage] = useState(true);
   const [cooldownTimer, setCooldownTimer] = useState(0);
 
+  const [pollActive, setPollActive] = useState(true);
+  const [QandaActive, setQandaActive] = useState(true);
+
   const [visiblePolls, setVisiblePolls] = useState({});
 
   const [error, setError] = useState("");
 
   const navigate = useNavigate();
-  const { user } = useContext(UserContext);
-
-  const totalVotes = option1Count + option2Count;
-  const option1Percentage =
-    totalVotes === 0 ? 0 : Math.round((option1Count / totalVotes) * 100);
-  const option2Percentage =
-    totalVotes === 0 ? 0 : Math.round((option2Count / totalVotes) * 100);
 
   useEffect(() => {
     if (showPollContainer) {
@@ -97,6 +94,13 @@ export default function Dashboard() {
     setShowPollContainer(true);
   };
 
+  const handlePollActive = () => {
+    setPollActive(!pollActive);
+  };
+  const handleQandaActive = () => {
+    setQandaActive(!QandaActive);
+  };
+
   const handleQandaIconClick = () => {
     setShowQandaContainer(true);
   };
@@ -114,6 +118,7 @@ export default function Dashboard() {
       await apiService.updateStream(streamid, {
         title: streamTitle,
         description: description,
+        iframe: streamURL,
       });
       window.location.reload();
     } catch (error) {
@@ -143,14 +148,6 @@ export default function Dashboard() {
     }
   };
 
-  // const handleDeleteQuestion = async (id) => {
-  //   try {
-  //     await apiService.deleteQuestion(id);
-  //     window.location.reload();
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
   const handleDeleteQuestion = async (id, index) => {
     try {
       await apiService.deleteQuestion(id);
@@ -311,6 +308,10 @@ export default function Dashboard() {
         setRoom(response.data.room_id);
         setDescription(response.data.description);
         setStreamTitle(response.data.title);
+        setStreamURL(response.data.iframe);
+
+        const streamer = await apiService.getUserById(response.data.user_id);
+        setStreamer(streamer.data.username);
 
         // Check if the current user's user_id matches the user_id in the streamData
 
@@ -502,12 +503,12 @@ export default function Dashboard() {
             },
           ]);
 
-          setOption1Count(
-            (prevCount) => prevCount + poll.options[0].votes.length
-          );
-          setOption2Count(
-            (prevCount) => prevCount + poll.options[1].votes.length
-          );
+          // setOption1Count(
+          //   (prevCount) => prevCount + poll.options[0].votes.length
+          // );
+          // setOption2Count(
+          //   (prevCount) => prevCount + poll.options[1].votes.length
+          // );
         });
       } catch (error) {
         console.error(error);
@@ -532,6 +533,7 @@ export default function Dashboard() {
 
             {isEditing && (
               <div className="titelupdatediv">
+                <label className="title-label-aanpassen">Titel</label>
                 <input
                   type="text"
                   className="title-input"
@@ -547,6 +549,17 @@ export default function Dashboard() {
             )}
           </div>
 
+          {isEditing && (
+            <div className="urlupdatediv">
+              <label className="urllabel">URL Aanpassen</label>
+              <input
+                type="text"
+                className="url-input "
+                onChange={(e) => setStreamURL(e.target.value)}
+                value={streamURL}
+              ></input>
+            </div>
+          )}
           {isEditing && (
             <div className="beschrijvingupdatediv">
               <label className="beschrijving-label">Beschrijving</label>
@@ -568,107 +581,143 @@ export default function Dashboard() {
         {poll && <h1 className="resultaten-title">Resultaten</h1>}
         <div className="features-results">
           <div className="polls">
-            <div className="poll-dropdown">
+            <div className="poll-dropdown" onClick={handlePollActive}>
               <p className="polls-title">Polls ({poll.length})</p>
-              <img src={downarrow} className="downarrow" />
+              <img
+                src={downarrow}
+                className={`downarrow ${pollActive ? "active" : ""}`}
+              />
             </div>
-            {poll.map((poll, index) => (
-              <div
-                className="poll-container"
-                style={{
-                  display:
-                    selectedPollIndex === index && showPollOverlay
-                      ? "none"
-                      : "flex",
-                }}
-                key={index}
-              >
-                <div className="poll-header">
-                  <p
-                    className="poll-cross"
-                    onClick={() => {
-                      setSelectedPollIndex(index);
-                      handleDeletePolls(poll.id, index);
+            {pollActive &&
+              poll.map((poll, index) => {
+                // Find the option with the highest percentage
+                const highestPercentageOption = poll.options.reduce(
+                  (prev, current) =>
+                    (current.count / poll.totalVotes) * 100 >
+                    (prev.count / poll.totalVotes) * 100
+                      ? current
+                      : prev,
+                  poll.options[0]
+                );
+
+                return (
+                  <div
+                    className="poll-container"
+                    style={{
+                      display:
+                        selectedPollIndex === index && showPollOverlay
+                          ? "none"
+                          : "flex",
                     }}
+                    key={index}
                   >
-                    <RxCross1 />
-                  </p>
-                </div>
-                <h1 className="poll-title">{poll.pollQuestion}</h1>
-                <div className="options-container">
-                  <div className="option-container">
-                    <h1 className="option-text">{poll.options[0].option}</h1>
-                    {/* <h2 className="option-percentage">{option1Percentage}%</h2> */}
-                    <h2 className="option-percentage">
-                      {poll.totalVotes === 0
-                        ? 0
-                        : Math.round(
-                            (poll.options[0].count / poll.totalVotes) * 100
-                          )}
-                      %
-                    </h2>
+                    <div className="poll-header">
+                      <p
+                        className="poll-cross"
+                        onClick={() => {
+                          setSelectedPollIndex(index);
+                          handleDeletePolls(poll.id, index);
+                        }}
+                      >
+                        <RxCross1 />
+                      </p>
+                    </div>
+                    <h1 className="poll-title">{poll.pollQuestion}</h1>
+                    <div className="options-container">
+                      <div
+                        className={`option-container ${
+                          highestPercentageOption.option ===
+                          poll.options[0].option
+                            ? "highest-option"
+                            : ""
+                        }`}
+                      >
+                        <h1 className="option-text">
+                          {poll.options[0].option}
+                        </h1>
+                        <h2 className="option-percentage">
+                          {poll.totalVotes === 0
+                            ? 0
+                            : Math.round(
+                                (poll.options[0].count / poll.totalVotes) * 100
+                              )}
+                          %
+                        </h2>
+                      </div>
+                      <div
+                        className={`option-container ${
+                          highestPercentageOption.option ===
+                          poll.options[1].option
+                            ? "highest-option"
+                            : ""
+                        }`}
+                      >
+                        <h1 className="option-text">
+                          {poll.options[1].option}
+                        </h1>
+                        <h2 className="option-percentage">
+                          {poll.totalVotes === 0
+                            ? 0
+                            : Math.round(
+                                (poll.options[1].count / poll.totalVotes) * 100
+                              )}
+                          %
+                        </h2>
+                      </div>
+                    </div>
                   </div>
-                  <div className="option-container">
-                    <h1 className="option-text">{poll.options[1].option}</h1>
-                    {/* <h2 className="option-percentage">{option2Percentage}%</h2> */}
-                    <h2 className="option-percentage">
-                      {poll.totalVotes === 0
-                        ? 0
-                        : Math.round(
-                            (poll.options[1].count / poll.totalVotes) * 100
-                          )}
-                      %
-                    </h2>
-                  </div>
-                </div>
-              </div>
-            ))}
+                );
+              })}
           </div>
 
           <div className="qanda">
-            <div className="qanda-dropdown">
+            <div className="qanda-dropdown" onClick={handleQandaActive}>
               <p className="qanda-title">Q&A's ({questions.length})</p>
-              <img src={downarrow} className="downarrow" />
+              <img
+                src={downarrow}
+                className={`downarrow ${QandaActive ? "active" : ""}`}
+              />
             </div>
-            {questions.map((qstn, index) => (
-              <div
-                className="qanda-container"
-                style={{
-                  display:
-                    selectedQandAIndex === index && showPollOverlay
-                      ? "none"
-                      : "flex",
-                }}
-                key={index}
-              >
-                <div className="qanda-header">
-                  <p
-                    className="qanda-cross"
-                    onClick={() => {
-                      setSelectedQandAIndex(index);
-                      handleDeleteQuestion(qstn.id, index);
-                    }}
-                  >
-                    <RxCross1 />
-                  </p>
+            {QandaActive &&
+              questions.map((qstn, index) => (
+                <div
+                  className="qanda-container"
+                  style={{
+                    display:
+                      selectedQandAIndex === index && showPollOverlay
+                        ? "none"
+                        : "flex",
+                  }}
+                  key={index}
+                >
+                  <div className="qanda-header">
+                    <p
+                      className="qanda-cross"
+                      onClick={() => {
+                        setSelectedQandAIndex(index);
+                        handleDeleteQuestion(qstn.id, index);
+                      }}
+                    >
+                      <RxCross1 />
+                    </p>
+                  </div>
+                  <p className="qanda-question">{qstn.question}</p>
+                  <div className="answers-container">
+                    {answers.length === 0 ? (
+                      <p className="no-messages-white">Nog geen antwoorden</p>
+                    ) : (
+                      answers
+                        .filter((answr) => answr.question_id === qstn.id) // Filter answers by question_id
+                        .map((answr, index) => (
+                          <div className="answer" key={index}>
+                            <h1 className="answer-user">{answr.username}</h1>
+                            <p className="answer-text">{answr.answer}</p>
+                          </div>
+                        ))
+                    )}
+                  </div>
                 </div>
-                <p className="qanda-question">{qstn.question}</p>
-                <div className="answers-container">
-                  {answers.length === 0 ? (
-                    <p className="no-messages-white">Nog geen antwoorden</p>
-                  ) : (
-                    answers
-                      .filter((answr) => answr.question_id === qstn.id) // Filter answers by question_id
-                      .map((answr, index) => (
-                        <div className="answer" key={index}>
-                          <h1 className="answer-user">{answr.username}</h1>
-                          <p className="answer-text">{answr.answer}</p>
-                        </div>
-                      ))
-                  )}
-                </div>
-              </div>
-            ))}
+              ))}
           </div>
         </div>
       </div>
@@ -688,8 +737,8 @@ export default function Dashboard() {
                     <SentMessage
                       key={index}
                       user={msg.username}
-                      time={new Date().toLocaleTimeString()}
                       message={msg.message}
+                      role="streamer"
                     />
                   );
                 } else {
@@ -697,8 +746,8 @@ export default function Dashboard() {
                     <ReceivedMessage
                       key={index}
                       user={msg.username}
-                      time={new Date().toLocaleTimeString()}
                       message={msg.message}
+                      role="viewer"
                     />
                   );
                 }

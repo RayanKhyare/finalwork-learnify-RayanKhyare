@@ -166,3 +166,37 @@ table {
 html {
   background-color: $background-color;
 }
+
+@media (max-width: 480px) {
+  body {
+    overflow-x: hidden;
+    margin-bottom: 100px;
+  }
+
+  html {
+    overflow-x: hidden;
+  }
+
+  ::-webkit-scrollbar {
+    width: 4px;
+    cursor: grab;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f100;
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: $orange;
+    cursor: grab;
+    border-radius: 15px;
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: $orange;
+    cursor: grab;
+  }
+}

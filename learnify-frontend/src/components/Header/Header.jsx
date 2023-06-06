@@ -130,7 +130,7 @@ export default function Header() {
         learnify
       </h1>
       <div className="navigation">
-        {/* <div className="navigation-general">
+        <div className="navigation-general">
           <ul className="navigation-ul">
             <li className="home-li" onClick={handleClickMain}>
               Home
@@ -139,11 +139,11 @@ export default function Header() {
               Bladeren
             </li>
           </ul>
-        </div> */}
-
-        <div>
-          <span></span>
         </div>
+
+        {/* <div>
+          <span></span>
+        </div> */}
 
         {user && user.role === TEACHER_ROLE ? (
           <div className="navigation-teacher">
@@ -152,11 +152,14 @@ export default function Header() {
               className="addvideo-btn"
               onClick={handleClickAddVideo}
             />
-            <img
-              src={streambtn}
-              className="stream-btn"
-              onClick={handleClickAddStream}
-            />
+            <div className="stream-btn-wrapper">
+              <img
+                src={streambtn}
+                className="stream-btn"
+                onClick={handleClickAddStream}
+              />
+              {hasStream && <div className="dot"></div>}
+            </div>
           </div>
         ) : null}
       </div>
@@ -180,7 +183,7 @@ export default function Header() {
                     onClick={() => {
                       localStorage.removeItem("token"); // remove the JWT token from local storage
                       setIsLoggedIn(false); // update the state to false
-                      navigate("/login");
+                      window.location.reload();
                     }}
                   >
                     Logout

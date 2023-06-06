@@ -35,14 +35,14 @@
           color: $text-color;
         }
 
-        .role {
-          width: 100% !important;
-        }
+        // .role {
+        //   width: 100% !important;
+        // }
         .email,
         .password,
         .username,
         .role {
-          width: 100%;
+          // width: 100%;
           padding: 20px 0px;
           padding-left: 25px;
           color: $text-color;
@@ -50,6 +50,11 @@
           border-radius: 10px;
           margin-bottom: 20px;
           border: 1px solid $text-color;
+          box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .role {
+          box-sizing: border-box;
         }
 
         .field {
@@ -77,6 +82,7 @@
           border: none;
           margin-bottom: 20px;
           cursor: pointer;
+          box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.05);
         }
       }
 
@@ -100,7 +106,7 @@
           .avatar-icon {
             width: 125px;
             margin: 15px;
-
+            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.05);
             border-radius: 50%;
             cursor: pointer;
           }
@@ -119,6 +125,301 @@
         font-weight: 600;
         text-decoration: underline;
         cursor: pointer;
+      }
+    }
+  }
+}
+
+.register-btn-mobile {
+  display: none;
+}
+
+@media (max-width: 480px) {
+  .register {
+    display: flex;
+    margin-bottom: 50px;
+    .register-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: 100%;
+
+      /* Add the following properties for vertical centering */
+      min-height: calc(
+        100vh - 200px
+      ); /* Set the height to full viewport height */
+
+      .register-title {
+        font-family: "Sora", sans-serif;
+        font-size: 2.5em;
+        color: $text-color;
+        margin-bottom: 20px;
+      }
+
+      .formandavatar {
+        display: flex;
+        flex-direction: column;
+        .register-form {
+          display: flex;
+          flex-direction: column;
+          align-items: left;
+          width: 90%;
+          .role-label {
+            margin-bottom: 15px;
+            font-family: "Sora", sans-serif;
+            font-size: 1.1em;
+            color: $text-color;
+          }
+
+          // .role {
+          //   width: 100% !important;
+          // }
+          .email,
+          .password,
+          .username,
+          .role {
+            // width: 100%;
+            padding: 20px 0px;
+            padding-left: 25px;
+            color: $text-color;
+            font-family: "Sora", sans-serif;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border: 1px solid $text-color;
+          }
+
+          .field {
+            display: flex;
+            flex-direction: column;
+            .password {
+              margin-bottom: 10px;
+            }
+            .max {
+              margin-bottom: 15px;
+              font-family: "Sora", sans-serif;
+              font-size: 0.8em;
+              color: $smalltext-color;
+            }
+          }
+          .register-btn {
+            display: none;
+            width: 100%;
+            background-color: $blue;
+            color: white;
+            padding: 15px 0px;
+            font-family: "Sora", sans-serif;
+            font-size: 1.6em;
+            font-weight: 300;
+            border-radius: 10px;
+            border: none;
+            margin-bottom: 20px;
+            cursor: pointer;
+          }
+        }
+
+        .avatar {
+          font-family: "Sora", sans-serif;
+          margin-left: 0px;
+          padding-left: 0px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          margin-top: 15px;
+          .kiesavatar {
+            font-size: 1.5em;
+            color: $text-color;
+            font-weight: 600;
+          }
+
+          .avatar-container {
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: column;
+            .avatar-icon {
+              width: 100px;
+              margin: 15px;
+
+              border-radius: 50%;
+              cursor: pointer;
+            }
+            .active {
+              border: 3px solid $orange;
+              border-radius: 50%;
+            }
+          }
+        }
+        .register-btn-mobile {
+          width: 100%;
+          background-color: $blue;
+          color: white;
+          padding: 15px 0px;
+          font-family: "Sora", sans-serif;
+          font-size: 1.6em;
+          font-weight: 300;
+          border-radius: 10px;
+          border: none;
+          margin-bottom: 20px;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-top: 15px;
+        }
+      }
+      .alreadyaccount {
+        font-family: "Sora", sans-serif;
+        font-size: 1.3em;
+        line-height: 1.5;
+        .inloggen {
+          font-weight: 600;
+          text-decoration: underline;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) and (min-width: 480px) {
+  .register {
+    display: flex;
+    margin-bottom: 50px;
+    .register-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: 100%;
+
+      /* Add the following properties for vertical centering */
+      min-height: calc(
+        100vh - 200px
+      ); /* Set the height to full viewport height */
+
+      .register-title {
+        font-family: "Sora", sans-serif;
+        font-size: 2.5em;
+        color: $text-color;
+        margin-bottom: 20px;
+      }
+
+      .formandavatar {
+        display: flex;
+        justify-content: space-between;
+        .register-form {
+          display: flex;
+          flex-direction: column;
+          align-items: left;
+          width: 50%;
+          .role-label {
+            margin-bottom: 15px;
+            font-family: "Sora", sans-serif;
+            font-size: 1.1em;
+            color: $text-color;
+          }
+
+          // .role {
+          //   width: 100% !important;
+          // }
+          .email,
+          .password,
+          .username,
+          .role {
+            // width: 100%;
+            padding: 20px 0px;
+            padding-left: 25px;
+            color: $text-color;
+            font-family: "Sora", sans-serif;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border: 1px solid $text-color;
+          }
+
+          .field {
+            display: flex;
+            flex-direction: column;
+            .password {
+              margin-bottom: 10px;
+            }
+            .max {
+              margin-bottom: 15px;
+              font-family: "Sora", sans-serif;
+              font-size: 0.8em;
+              color: $smalltext-color;
+            }
+          }
+          .register-btn {
+            width: 100%;
+            background-color: $blue;
+            color: white;
+            padding: 15px 0px;
+            font-family: "Sora", sans-serif;
+            font-size: 1.6em;
+            font-weight: 300;
+            border-radius: 10px;
+            border: none;
+            margin-bottom: 20px;
+            cursor: pointer;
+          }
+        }
+
+        .avatar {
+          font-family: "Sora", sans-serif;
+          margin-left: 0px;
+          padding-left: 0px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          margin-top: 15px;
+          .kiesavatar {
+            font-size: 1.5em;
+            color: $text-color;
+            font-weight: 600;
+          }
+
+          .avatar-container {
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: column;
+            .avatar-icon {
+              width: 100px;
+              margin: 15px;
+
+              border-radius: 50%;
+              cursor: pointer;
+            }
+            .active {
+              border: 3px solid $orange;
+              border-radius: 50%;
+            }
+          }
+        }
+        .register-btn-mobile {
+          width: fit-content;
+          background-color: $blue;
+          color: white;
+          padding: 10px 15px;
+          font-family: "Sora", sans-serif;
+          font-size: 1.6em;
+          font-weight: 300;
+          border-radius: 10px;
+          border: none;
+          margin-bottom: 20px;
+          cursor: pointer;
+          display: none;
+          align-items: center;
+          justify-content: center;
+          margin-top: 15px;
+        }
+      }
+      .alreadyaccount {
+        font-family: "Sora", sans-serif;
+        font-size: 1.3em;
+        line-height: 1.5;
+        .inloggen {
+          font-weight: 600;
+          text-decoration: underline;
+          cursor: pointer;
+        }
       }
     }
   }

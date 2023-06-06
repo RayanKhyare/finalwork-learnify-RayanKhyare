@@ -13,10 +13,16 @@ function Thumbnail({ url }) {
   const videoId = extractVideoId(url);
 
   if (!videoId) {
-    return <div>Invalid YouTube URL</div>;
+    return (
+      <div>
+        {" "}
+        Invalid YouTube URL , the format should be
+        "https://www.youtube.com/watch?v='uw_stream_id'"
+      </div>
+    );
   }
 
-  const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/sddefault.jpg`;
+  const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
 
   return (
     <img

@@ -56,6 +56,11 @@
       margin-right: 15px;
       display: flex;
       flex-direction: column;
+
+      .input-flex {
+        display: flex;
+        align-items: center;
+      }
       .addstream-form-label {
         font-size: 1.3em;
         font-family: "Sora", sans-serif;
@@ -77,6 +82,45 @@
         font-weight: 500;
         color: $text-color;
         font-family: "Sora", sans-serif;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.05);
+      }
+
+      .custom-file-input {
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .custom-file-input::-webkit-file-upload-button {
+        visibility: hidden;
+      }
+
+      .custom-file-input::before {
+        content: "Upload een bestand of pdf (max. 10MB)";
+        display: inline-block;
+        background: $background-color;
+        border: 4px dashed #192440;
+        border-radius: 10px;
+        padding: 15px 45px;
+        outline: none;
+        white-space: nowrap;
+        cursor: pointer;
+        text-shadow: 1px 1px #fff;
+        font-weight: 500;
+        font-size: 10pt;
+        font-family: "Sora";
+        color: $text-color;
+      }
+      .custom-file-input::placeholder {
+        display: none;
+      }
+
+      .custom-file-input:hover::before {
+        border-color: black;
+      }
+
+      .custom-file-input:active::before {
+        background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
       }
 
       .opleiding-input {
@@ -106,21 +150,238 @@
   }
 }
 
-.addstream-btn {
-  background-color: $blue;
-  color: white;
-  font-family: "Sora", sans-serif;
-  font-size: 1.5em;
+.submitdiv {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 15px 20px;
-  border-radius: 10px;
-  cursor: pointer;
-  border: none;
-  width: 215px;
-  .checksign {
-    margin-left: 0px;
-    margin-right: 10px;
+
+  .addstream-btn {
+    background-color: $blue;
+    color: white;
+    font-family: "Sora", sans-serif;
+    font-size: 1.5em;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    border: none;
+    width: 215px;
+    .checksign {
+      margin-left: 0px;
+      margin-right: 10px;
+    }
   }
+}
+
+@media (max-width: 480px) {
+  .addstream {
+    margin-top: 25px;
+    .addstream-header {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+      .addstream-title {
+        font-size: 1.5em;
+        font-family: "Sora", sans-serif;
+        font-weight: 600;
+        color: $text-color;
+      }
+    }
+
+    .addstream-description {
+      width: 50%;
+      font-size: 1em;
+      font-family: "Sora", sans-serif;
+      color: #626262;
+      font-weight: 400;
+      margin-top: 5px;
+      line-height: 1.1;
+    }
+
+    .firstline {
+      display: flex;
+      align-items: center;
+      .checkurlbtn {
+        padding: 14px 75px;
+        padding-right: 15px;
+        padding-left: 15px;
+        border: none;
+        border-radius: 10px;
+        height: fit-content;
+        font-weight: 500;
+        color: $background-color;
+        font-family: "Sora", sans-serif;
+        margin-left: 0px;
+        background-color: $blue;
+        cursor: pointer;
+        margin-top: 10px;
+      }
+    }
+
+    .firstline-vertical {
+      display: flex;
+      flex-direction: column;
+    }
+    .addstream-form {
+      margin-top: 10px;
+
+      display: flex;
+      flex-direction: column;
+
+      .field-input {
+        display: none !important;
+      }
+      .addstream-field {
+        margin-top: 25px;
+        margin-bottom: 25px;
+        margin-right: 0px;
+        display: flex;
+        flex-direction: column;
+        .input-flex {
+          display: flex;
+          align-items: center;
+        }
+        .addstream-form-label {
+          font-size: 1.3em;
+          font-family: "Sora", sans-serif;
+          color: $text-color;
+          font-weight: 500;
+          margin-bottom: 15px;
+        }
+
+        .iframe {
+          width: 315px !important;
+        }
+
+        .input {
+          padding: 10px 150px;
+          width: fit-content;
+          padding-left: 15px;
+          border: 3px solid $text-color;
+          border-radius: 10px;
+          font-weight: 500;
+          color: $text-color;
+          font-family: "Sora", sans-serif;
+        }
+
+        .custom-file-input {
+          cursor: pointer;
+          display: flex;
+          flex-direction: column;
+        }
+        .custom-file-input::-webkit-file-upload-button {
+          visibility: hidden;
+        }
+        .custom-file-input::before {
+          content: "Upload een bestand of pdf (max. 10MB)";
+          display: inline-block;
+          background: $background-color;
+          border: 4px dashed #192440;
+          border-radius: 10px;
+          padding: 15px 45px;
+          outline: none;
+          white-space: nowrap;
+
+          cursor: pointer;
+          text-shadow: 1px 1px #fff;
+          font-weight: 500;
+          font-size: 10pt;
+          font-family: "Sora";
+          color: $text-color;
+        }
+        .custom-file-input:hover::before {
+          border-color: black;
+        }
+        .custom-file-input:active::before {
+          background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
+        }
+
+        .opleiding-input {
+          padding: 10px 150px;
+          padding-right: 55px;
+          padding-left: 15px;
+        }
+
+        .textarea {
+          width: 25%;
+
+          height: 150px;
+          padding-left: 5px;
+          padding-right: 5px;
+        }
+
+        .max {
+          font-family: "Sora", sans-serif;
+          margin-top: 15px;
+          font-weight: 300;
+          font-size: 0.8em;
+          color: $text-color;
+        }
+      }
+    }
+  }
+
+  .submitdiv {
+    display: flex;
+    .loader {
+      border: 16px solid #f3f3f3; /* Light grey */
+      border-top: 16px solid #3498db; /* Blue */
+      border-radius: 50%;
+      width: 35px;
+      height: 35px;
+      animation: spin 2s linear infinite;
+      margin-left: 25px;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+    .addstream-btn {
+      background-color: $blue;
+      color: white;
+      font-family: "Sora", sans-serif;
+      font-size: 1.5em;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px 20px;
+      border-radius: 10px;
+      cursor: pointer;
+      border: none;
+      width: 215px;
+      .checksign {
+        margin-left: 0px;
+        margin-right: 10px;
+      }
+    }
+  }
+}
+
+.loader-url {
+  border: 16px solid #f3f3f3; /* Light grey */
+  border-top: 16px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 10px;
+  height: 10px;
+  animation: spin 2s linear infinite;
+  margin-left: 10px;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.checkmark {
+  font-size: 1.5em;
+  margin-left: 10px;
 }

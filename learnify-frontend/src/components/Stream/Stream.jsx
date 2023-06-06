@@ -4,13 +4,14 @@ import { RxCross1 } from "react-icons/rx";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import apiService from "../services/apiService";
-
+import { motion } from "framer-motion";
 import Video from "../services/videoService";
 import ReceivedMessage from "../ReceivedMessage/ReceivedMessage";
 import SentMessage from "../SentMessage/SentMessage";
 import socket from "../services/socket";
+import fileIcon from "../../assets/file.svg";
 import "./stream.scss";
-
+import { getProfilePicture } from "../services/profilePicService";
 import { UserContext } from "../../App";
 export default function () {
   const { streamid } = useParams();
@@ -18,6 +19,9 @@ export default function () {
   const [room, setRoom] = useState("");
   const [messages, setMessages] = useState([]);
   const [streamData, setStreamData] = useState({});
+  const [streamer, setStreamer] = useState("");
+  const [streamerProfilePic, setStreamerProfilePic] = useState(null);
+  const [categoryName, setCategoryName] = useState("");
 
   const [title, setTitle] = useState("");
   const [beschrijving, setBeschrijving] = useState("");
@@ -25,6 +29,8 @@ export default function () {
   const [question, setQuestion] = useState(null);
   const [remainingTime, setRemainingTime] = useState(0);
   const [answer, setAnswer] = useState(null);
+
+  const [file, setFile] = useState(null);
 
   const [canSendMessage, setCanSendMessage] = useState(true);
   const [cooldownTimer, setCooldownTimer] = useState(0);
@@ -127,6 +133,14 @@ export default function () {
     }
   };
 
+  const categoryLink = () => {
+    navigate(`/categories/${streamData.category_id}`);
+  };
+
+  const handleUserClick = (id) => {
+    navigate(`/user/${id}`);
+  };
+
   useEffect(() => {
     if (streamData && user && user.id && streamData.user_id === user.id) {
       navigate(`/dashboard/${streamid}`);
@@ -137,9 +151,20 @@ export default function () {
     async function fetchStream() {
       try {
         const response = await apiService.getStreamById(streamid);
+        if (response.data.status === 404) {
+          navigate("/main");
+        }
 
         setStreamData(response.data);
         setRoom(response.data.room_id);
+
+        const streamer = await apiService.getUserById(response.data.user_id);
+        setStreamer(streamer.data.username);
+        setStreamerProfilePic(streamer.data.profile_pic);
+        const category = await apiService.getCategoryById(
+          response.data.category_id
+        );
+        setCategoryName(category.data.name);
       } catch (error) {
         console.error(error);
       }
@@ -224,6 +249,19 @@ export default function () {
     fetchMessages();
   }, [streamid]);
 
+  useEffect(() => {
+    const fetchFile = async () => {
+      try {
+        const response = await apiService.getFilefromStream(streamid);
+        setFile(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchFile();
+  }, [streamid]);
+  console.log(file);
   const handleVote = async (optionId, option) => {
     try {
       await setChosenOptionID(optionId);
@@ -270,7 +308,6 @@ export default function () {
               ))}
 
               <p class="remaining-time">
-                {" "}
                 Remaining Time: {remainingTime} seconds
               </p>
             </div>
@@ -315,8 +352,39 @@ export default function () {
 
         {streamData.iframe && <Video url={streamData.iframe} />}
         <div className="stream-bottom-left">
-          <h1 className="stream-title">{streamData.title}</h1>
+          <div className="streambottom-header">
+            <h1 className="stream-title">{streamData.title}</h1>
+            {file && (
+              <div className="files-container">
+                <h2 className="file-title">Alle gedeelde bestanden</h2>
+                <div className="file-container">
+                  <img src={fileIcon} className="file-icon" />
+                  <a
+                    className="file-redirect"
+                    href={file && file.url}
+                    target="_blank"
+                  >
+                    {file && file.filename}
+                  </a>
+                </div>
+              </div>
+            )}
+          </div>
+          <h3 className="stream-category" onClick={categoryLink}>
+            {categoryName && categoryName}
+          </h3>
 
+          <div
+            className="streamer-container"
+            onClick={() => handleUserClick(streamData && streamData.user_id)}
+          >
+            <img
+              src={getProfilePicture(streamerProfilePic && streamerProfilePic)}
+              alt=""
+              className="streamer-streamerimg"
+            />
+            <h2 className="streamer-streamername">{streamer && streamer}</h2>
+          </div>
           <h3 className="stream-beschrijvingtitle">Beschrijving</h3>
           <p className="stream-beschrijving">{streamData.description}</p>
         </div>
@@ -336,8 +404,8 @@ export default function () {
                     <SentMessage
                       key={index}
                       user={msg.username}
-                      time={new Date().toLocaleTimeString()}
                       message={msg.message}
+                      role="viewer"
                     />
                   );
                 } else {
@@ -345,8 +413,8 @@ export default function () {
                     <ReceivedMessage
                       key={index}
                       user={msg.username}
-                      time={new Date().toLocaleTimeString()}
                       message={msg.message}
+                      role={msg.username === streamer ? "streamer" : "viewer"}
                     />
                   );
                 }

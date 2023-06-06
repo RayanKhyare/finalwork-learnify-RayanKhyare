@@ -5,11 +5,13 @@ import stockimage from "../../assets/stockimage_man.jpg";
 import Video from "../services/videoService";
 import Thumbnail from "../services/thumbnailService";
 import rechten from "../../assets/rechten.jpeg";
+import liveicon from "../../assets/live_icon.svg";
 
-import "./bladeren.scss";
 import Navigation from "../Navigation/Navigation";
 import { getProfilePicture } from "../services/profilePicService";
 import { UserContext } from "../../App";
+import { motion } from "framer-motion";
+import "./bladeren.scss";
 export default function Bladeren() {
   const [activeLink, setActiveLink] = useState("livestreams");
   const [streams, setStreams] = useState([]);
@@ -155,7 +157,10 @@ export default function Bladeren() {
                 key={index}
                 onClick={() => handleStreamClick(stream.id)}
               >
-                <Thumbnail url={stream.iframe} />
+                <div className="thumbnail-container">
+                  <Thumbnail url={stream.iframe} />
+                  <img src={liveicon} alt="Live Icon" className="live-icon" />
+                </div>
                 <h2 className="stream-title">{stream.title}</h2>
                 <div className="streamerinfo">
                   <img

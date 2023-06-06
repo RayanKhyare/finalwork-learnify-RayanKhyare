@@ -152,6 +152,9 @@ const Register = () => {
               </div>
             </div>
           </div>
+          <button className="register-btn-mobile" type="submit">
+            Account aanmaken
+          </button>
         </div>
         <p className="alreadyaccount">
           Heb je al een account?

@@ -2,6 +2,7 @@
 
 .bladeren {
   width: 100%;
+  margin-bottom: 150px;
   .bladeren-title {
     font-size: 3em;
     font-family: "Sora", sans-serif;
@@ -76,7 +77,7 @@
         margin-top: 50px;
       }
       .streamcontainer {
-        width: calc(100% / 4);
+        width: calc(100% / 4 - 10px);
         padding: 10px;
         padding-left: 0px;
         cursor: pointer;
@@ -84,12 +85,23 @@
           scale: 1.02;
           transition: 0.2s ease;
         }
-        .featuredstream-thumbnail {
-          border-radius: 15px;
-          width: 100%;
-          height: 60%;
-          object-fit: cover;
-          filter: drop-shadow(-5px 4px 8px rgba(0, 0, 0, 0.25));
+        .thumbnail-container {
+          height: auto;
+          position: relative;
+          .featuredstream-thumbnail {
+            border-radius: 15px;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: drop-shadow(-5px 4px 8px rgba(0, 0, 0, 0.25));
+          }
+
+          .live-icon {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translate(-50%, 50%);
+          }
         }
 
         .stream-title {
@@ -179,7 +191,7 @@
         margin-top: 50px;
       }
       .streamcontainer {
-        width: calc(100% / 4);
+        width: calc(100% / 4 - 10px);
         padding: 10px;
         padding-left: 0px;
         cursor: pointer;
@@ -190,7 +202,7 @@
         .featuredstream-thumbnail {
           border-radius: 15px;
           width: 100%;
-          height: 60%;
+          height: auto;
           object-fit: cover;
           filter: drop-shadow(-5px 4px 8px rgba(0, 0, 0, 0.25));
         }
@@ -221,6 +233,515 @@
             margin-left: 10px;
             color: $smalltext-color;
             font-weight: 300;
+          }
+        }
+      }
+    }
+  }
+}
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+@media (max-width: 480px) {
+  .bladeren {
+    width: 100%;
+    margin-bottom: 150px;
+    .bladeren-title {
+      font-size: 2em;
+      font-family: "Sora", sans-serif;
+      color: $text-color;
+      margin-bottom: 40px;
+      margin-top: 25px;
+      font-weight: 600;
+    }
+
+    .bladeren-nav {
+      display: flex;
+
+      .active {
+        position: relative;
+        display: inline-block;
+      }
+
+      .active::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 60%;
+        width: 100%;
+        height: 18px; /* Adjust the height as needed */
+        background-color: $orange; /* Adjust the color as needed */
+        z-index: -1;
+      }
+      .bladeren-link {
+        font-size: 1.2em;
+        font-family: "Sora", sans-serif;
+        color: $text-color;
+        font-weight: 500;
+        cursor: pointer;
+
+        &:hover {
+          position: relative;
+          display: inline-block;
+        }
+
+        &:hover::before {
+          content: "";
+          position: absolute;
+          left: 0;
+          top: 60%;
+          width: 105%;
+          height: 18px; /* Adjust the height as needed */
+          background-color: $orange; /* Adjust the color as needed */
+          z-index: -1;
+        }
+      }
+      .categorieen {
+        margin-left: 5px;
+      }
+      .videos {
+        margin-left: 25px;
+      }
+    }
+
+    .content-container {
+      width: 100%;
+      margin-top: 25px;
+      .livestreams-container {
+        display: flex;
+        flex-wrap: wrap;
+
+        .no-messages {
+          width: 100%;
+          text-align: center;
+          font-family: "Sora", sans-serif;
+          font-size: 1.6em;
+          font-weight: 600;
+          margin-top: 50px;
+        }
+        .streamcontainer {
+          width: calc(100% / 1);
+          padding: 10px;
+          padding-left: 0px;
+          cursor: pointer;
+          &:hover {
+            scale: 1.02;
+            transition: 0.2s ease;
+          }
+          .thumbnail-container {
+            height: auto;
+            position: relative;
+            .featuredstream-thumbnail {
+              border-radius: 15px;
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+              filter: drop-shadow(-5px 4px 8px rgba(0, 0, 0, 0.25));
+            }
+
+            .live-icon {
+              position: absolute;
+              bottom: 0;
+              left: 50%;
+              transform: translate(-50%, 50%);
+            }
+          }
+
+          .stream-title {
+            margin-top: 20px;
+            color: $text-color;
+            font-weight: 500;
+            font-size: 1.1em;
+            font-family: "Sora", sans-serif;
+            width: 100%;
+          }
+
+          .streamerinfo {
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            .streamer-img {
+              width: 30px;
+              height: 30px;
+              border-radius: 50%;
+              object-fit: cover;
+            }
+
+            .streamer-username {
+              font-size: 1em;
+              font-family: "Sora", sans-serif;
+              margin-left: 10px;
+              color: $smalltext-color;
+              font-weight: 300;
+            }
+          }
+        }
+      }
+
+      .categorieen-container {
+        display: flex;
+        flex-wrap: wrap;
+
+        // .categorycontainer:nth-child(7n) {
+        //   padding-left: 0px;
+        // }
+
+        .categorycontainer {
+          width: calc(100% / 2 - 20px);
+          padding: 10px;
+          margin-top: 15px;
+          &:hover {
+            scale: 1.02;
+            transition: 0.2s ease;
+          }
+          .category-image {
+            width: 100%;
+            height: 30vh;
+            object-fit: cover;
+            top: 50%;
+            left: 50%;
+            border-radius: 15px;
+            cursor: pointer;
+
+            &::after {
+              background: linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.4) -43.41%,
+                rgba(0, 0, 0, 0) 121.36%
+              );
+            }
+          }
+
+          .category-title {
+            margin-top: 10px;
+            font-size: 1em;
+            font-family: "Sora";
+            font-weight: 500;
+          }
+        }
+      }
+
+      .videos-container {
+        display: flex;
+        flex-wrap: wrap;
+
+        .no-messages {
+          width: 100%;
+          text-align: center;
+          font-family: "Sora", sans-serif;
+          font-size: 1.6em;
+          font-weight: 600;
+          margin-top: 50px;
+        }
+        .streamcontainer {
+          width: calc(100% / 1);
+          padding: 10px;
+          padding-left: 0px;
+          cursor: pointer;
+          &:hover {
+            scale: 1.02;
+            transition: 0.2s ease;
+          }
+          .featuredstream-thumbnail {
+            border-radius: 15px;
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            filter: drop-shadow(-5px 4px 8px rgba(0, 0, 0, 0.25));
+          }
+
+          .stream-title {
+            margin-top: 10px;
+            color: $text-color;
+            font-weight: 500;
+            font-size: 1.4em;
+            font-family: "Sora", sans-serif;
+            width: 100%;
+          }
+
+          .streamerinfo {
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            .streamer-img {
+              width: 30px;
+              height: 30px;
+              border-radius: 50%;
+              object-fit: cover;
+            }
+
+            .streamer-username {
+              font-size: 1em;
+              font-family: "Sora", sans-serif;
+              margin-left: 10px;
+              color: $smalltext-color;
+              font-weight: 300;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+@media (max-width: 768px) and (min-width: 480px) {
+  .bladeren {
+    width: 100%;
+    margin-bottom: 150px;
+    .bladeren-title {
+      font-size: 2em;
+      font-family: "Sora", sans-serif;
+      color: $text-color;
+      margin-bottom: 40px;
+      margin-top: 25px;
+      font-weight: 600;
+    }
+
+    .bladeren-nav {
+      display: flex;
+
+      .active {
+        position: relative;
+        display: inline-block;
+      }
+
+      .active::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 60%;
+        width: 100%;
+        height: 18px; /* Adjust the height as needed */
+        background-color: $orange; /* Adjust the color as needed */
+        z-index: -1;
+      }
+      .bladeren-link {
+        font-size: 1.4em;
+        font-family: "Sora", sans-serif;
+        color: $text-color;
+        font-weight: 500;
+        cursor: pointer;
+
+        &:hover {
+          position: relative;
+          display: inline-block;
+        }
+
+        &:hover::before {
+          content: "";
+          position: absolute;
+          left: 0;
+          top: 60%;
+          width: 105%;
+          height: 18px; /* Adjust the height as needed */
+          background-color: $orange; /* Adjust the color as needed */
+          z-index: -1;
+        }
+      }
+      .categorieen {
+        margin-left: 25px;
+      }
+      .videos {
+        margin-left: 25px;
+      }
+    }
+
+    .content-container {
+      width: 100%;
+      margin-top: 25px;
+      .livestreams-container {
+        display: flex;
+        flex-wrap: wrap;
+
+        .no-messages {
+          width: 100%;
+          text-align: center;
+          font-family: "Sora", sans-serif;
+          font-size: 1.6em;
+          font-weight: 600;
+          margin-top: 50px;
+        }
+        .streamcontainer {
+          width: calc(100% / 2 - 15px);
+          padding: 10px;
+          padding-left: 0px;
+          cursor: pointer;
+          &:hover {
+            scale: 1.02;
+            transition: 0.2s ease;
+          }
+          .thumbnail-container {
+            height: auto;
+            position: relative;
+            .featuredstream-thumbnail {
+              border-radius: 15px;
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+              filter: drop-shadow(-5px 4px 8px rgba(0, 0, 0, 0.25));
+            }
+
+            .live-icon {
+              position: absolute;
+              bottom: 0;
+              left: 50%;
+              transform: translate(-50%, 50%);
+            }
+          }
+
+          .stream-title {
+            margin-top: 20px;
+            color: $text-color;
+            font-weight: 500;
+            font-size: 1.1em;
+            font-family: "Sora", sans-serif;
+            width: 100%;
+          }
+
+          .streamerinfo {
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            .streamer-img {
+              width: 30px;
+              height: 30px;
+              border-radius: 50%;
+              object-fit: cover;
+            }
+
+            .streamer-username {
+              font-size: 1em;
+              font-family: "Sora", sans-serif;
+              margin-left: 10px;
+              color: $smalltext-color;
+              font-weight: 300;
+            }
+          }
+        }
+      }
+
+      .categorieen-container {
+        display: flex;
+        flex-wrap: wrap;
+
+        // .categorycontainer:nth-child(7n) {
+        //   padding-left: 0px;
+        // }
+
+        .categorycontainer {
+          width: calc(100% / 4 - 20px);
+          padding: 10px;
+          margin-top: 15px;
+          &:hover {
+            scale: 1.02;
+            transition: 0.2s ease;
+          }
+          .category-image {
+            width: 100%;
+            height: 30vh;
+            object-fit: cover;
+            top: 50%;
+            left: 50%;
+            border-radius: 15px;
+            cursor: pointer;
+
+            &::after {
+              background: linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.4) -43.41%,
+                rgba(0, 0, 0, 0) 121.36%
+              );
+            }
+          }
+
+          .category-title {
+            margin-top: 10px;
+            font-size: 1em;
+            font-family: "Sora";
+            font-weight: 500;
+          }
+        }
+      }
+
+      .videos-container {
+        display: flex;
+        flex-wrap: wrap;
+
+        .no-messages {
+          width: 100%;
+          text-align: center;
+          font-family: "Sora", sans-serif;
+          font-size: 1.6em;
+          font-weight: 600;
+          margin-top: 50px;
+        }
+        .streamcontainer {
+          width: calc(100% / 2 - 15px);
+          padding: 10px;
+          padding-left: 0px;
+          cursor: pointer;
+          &:hover {
+            scale: 1.02;
+            transition: 0.2s ease;
+          }
+          .featuredstream-thumbnail {
+            border-radius: 15px;
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            filter: drop-shadow(-5px 4px 8px rgba(0, 0, 0, 0.25));
+          }
+
+          .stream-title {
+            margin-top: 10px;
+            color: $text-color;
+            font-weight: 500;
+            font-size: 1.4em;
+            font-family: "Sora", sans-serif;
+            width: 100%;
+          }
+
+          .streamerinfo {
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            .streamer-img {
+              width: 30px;
+              height: 30px;
+              border-radius: 50%;
+              object-fit: cover;
+            }
+
+            .streamer-username {
+              font-size: 1em;
+              font-family: "Sora", sans-serif;
+              margin-left: 10px;
+              color: $smalltext-color;
+              font-weight: 300;
+            }
           }
         }
       }

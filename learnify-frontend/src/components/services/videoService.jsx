@@ -16,7 +16,12 @@ function Video({ url }) {
   const videoId = extractVideoId(url);
 
   if (!videoId) {
-    return <div>Invalid YouTube URL</div>;
+    return (
+      <div>
+        Invalid YouTube URL , the format should be
+        "https://www.youtube.com/watch?v='uw_stream_id'"
+      </div>
+    );
   }
 
   const iframeUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1`;

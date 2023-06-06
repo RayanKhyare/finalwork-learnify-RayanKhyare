@@ -8,6 +8,7 @@ import axios from "axios";
 import { getProfilePicture } from "../services/profilePicService";
 import googleApiKey from "../services/apiKey";
 import jwt_decode from "jwt-decode";
+import { motion } from "framer-motion";
 
 export default function AddStream() {
   const [iframe, setIframe] = useState("");
@@ -17,6 +18,14 @@ export default function AddStream() {
   const [categories, setCategories] = useState("");
   const [user_id, setuser_id] = useState("");
   const [error, setError] = useState("");
+
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [fileName, setFileName] = useState("null");
+  const [fileUrl, setFileUrl] = useState("");
+
+  const [loading, setLoading] = useState(false);
+  const [urlIsLoading, setUrlIsLoading] = useState(false);
+  const [isUrlValid, setIsUrlValid] = useState(false);
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -28,45 +37,60 @@ export default function AddStream() {
     }
   });
 
-  const checkUrl = async (e) => {
+  const checkUrl = async (e, iframe) => {
     e.preventDefault();
-    try {
-      // Extract video ID from YouTube URL
-      const videoId = extractVideoId(iframe);
+    setUrlIsLoading(true);
+    setTimeout(async () => {
+      try {
+        // Extract video ID from YouTube URL
+        const videoId = extractVideoId(iframe);
 
-      // Make API request to YouTube Data API
+        setError("");
 
-      if (!videoId) {
-        // Handle invalid URL
-        setError("Invalid YouTube URL");
-        return;
+        if (!videoId) {
+          // Handle invalid URL
+          setError(
+            "     Invalid YouTube URL , the format should be 'https://www.youtube.com/watch?v='uw_stream_id'"
+          );
+          return;
+        }
+
+        const response = await axios.get(
+          `https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${videoId}&key=${googleApiKey.googleApiKey}`
+        );
+
+        if (response.data.items.length === 0) {
+          // Handle non-existent video
+          setError("YouTube video not found");
+          return;
+        }
+
+        // Extract title and description from API response
+        const { title, description } = response.data.items[0].snippet;
+
+        // Update input values
+        setTitle(title);
+        setDescription(description);
+        setUrlIsLoading(false);
+        setIsUrlValid(true);
+      } catch (error) {
+        console.error(error);
+        setError("An error occurred");
       }
-
-      const response = await axios.get(
-        `https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${videoId}&key=${googleApiKey.googleApiKey}`
-      );
-
-      if (response.data.items.length === 0) {
-        // Handle non-existent video
-        setError("YouTube video not found");
-        return;
-      }
-
-      // Extract title and description from API response
-      const { title, description } = response.data.items[0].snippet;
-
-      // Update input values
-      setTitle(title);
-      setDescription(description);
-    } catch (error) {
-      console.error(error);
-      setError("An error occurred");
-    }
+    }, 1000);
   };
+
+  function handleFileData(file, name) {
+    setSelectedFile(file);
+    setFileName(name);
+    console.log(file, name);
+  }
 
   const handleSubmit = async (e) => {
     const randomNumber = Math.floor(Math.random() * 10000) + 1;
     e.preventDefault();
+
+    setLoading(true);
     try {
       const response = await apiService.postStream({
         user_id,
@@ -77,12 +101,35 @@ export default function AddStream() {
         iframe,
       });
 
-      navigate("/main");
-      // redirect to protected route
+      if (selectedFile) {
+        const formData = new FormData();
+        formData.append("file", selectedFile);
+        formData.append("upload_preset", "learnify");
+
+        const fileUploadResponse = await axios.post(
+          "https://api.cloudinary.com/v1_1/dytevoqrc/image/upload",
+          formData
+        );
+
+        console.log(fileUploadResponse);
+
+        await apiService
+          .postFile({
+            stream_id: response.data.id,
+            filename: fileName,
+            url: fileUploadResponse.data.url,
+          })
+          .then(() => {
+            setLoading(false);
+            navigate(`/dashboard/${response.data.id}`);
+          });
+      } else {
+        navigate(`/dashboard/${response.data.id}`);
+      }
     } catch (error) {
       console.error(error);
-      // display error message
       setError(error.response.data);
+      setLoading(false);
     }
   };
 
@@ -120,17 +167,20 @@ export default function AddStream() {
         <div className="firstline">
           <div className="addstream-field">
             <label className="addstream-form-label">YouTube link</label>
-            <div>
+            <div className="input-flex">
               <input
                 type="text"
                 className="input iframe"
                 value={iframe}
                 placeholder="Voer de YouTube link in"
-                onChange={(e) => setIframe(e.target.value)}
+                onChange={(e) => {
+                  setIframe(e.target.value);
+                  checkUrl(e, e.target.value);
+                }}
               />
-              <button className="checkurlbtn" type="submit" onClick={checkUrl}>
-                Check URL
-              </button>
+              {urlIsLoading && <div className="loader-url"></div>}
+
+              {isUrlValid && <div className="checkmark">✅</div>}
             </div>
           </div>
         </div>
@@ -159,14 +209,37 @@ export default function AddStream() {
               >
                 <option value="">Kies een opleiding</option>
                 {categories &&
-                  categories.map((category, index) => (
-                    <option value={category.id}>{category.name}</option>
-                  ))}
+                  categories
+                    .sort((a, b) => a.name.localeCompare(b.name))
+                    .map((category, index) => (
+                      <option value={category.id} key={index}>
+                        {category.name}
+                      </option>
+                    ))}
               </select>
+
+              <div className="addstream-field field-input">
+                <label className="addstream-form-label">
+                  Extra bestanden (optioneel)
+                </label>
+
+                <input
+                  type="file"
+                  id="files"
+                  className="custom-file-input"
+                  onChange={(event) => {
+                    handleFileData(
+                      event.target.files[0],
+                      event.target.files[0].name
+                    );
+                  }}
+                />
+              </div>
             </div>
           </div>
           <div className="addstream-field">
             <label className="addstream-form-label">Beschrijving</label>
+
             <textarea
               type="textarea"
               className="input textarea"
@@ -178,10 +251,17 @@ export default function AddStream() {
             <p className="max">Maximum 200 karakters</p>
           </div>
         </div>
-        <button className="addstream-btn" type="submit" onClick={handleSubmit}>
-          <img src={checksign} className="checksign" />
-          Live starten
-        </button>
+        <div className="submitdiv">
+          <button
+            className="addstream-btn"
+            type="submit"
+            onClick={handleSubmit}
+          >
+            <img src={checksign} className="checksign" />
+            Live starten
+          </button>
+          {loading && <div class="loader"></div>}
+        </div>
       </form>
     </div>
   );

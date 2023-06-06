@@ -37,6 +37,7 @@
         border-radius: 10px;
         margin-bottom: 20px;
         border: 1px solid $text-color;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.05);
       }
       .login-btn {
         width: 53%;
@@ -49,6 +50,7 @@
         border-radius: 10px;
         border: none;
         margin-bottom: 20px;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.05);
       }
     }
     .geenaccount {
@@ -59,6 +61,138 @@
         font-weight: 600;
         text-decoration: underline;
         cursor: pointer;
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .login {
+    display: flex;
+
+    .login-left {
+      width: fit-content;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: 100%;
+
+      /* Add the following properties for vertical centering */
+      min-height: calc(
+        100vh - 200px
+      ); /* Set the height to full viewport height */
+
+      .login-title {
+        font-family: "Sora", sans-serif;
+        font-size: 2.5em;
+        color: $text-color;
+        margin-bottom: 20px;
+      }
+
+      .login-form {
+        display: flex;
+        flex-direction: column;
+        align-items: left;
+
+        .email,
+        .password {
+          width: 90%;
+          padding: 20px 0px;
+          padding-left: 25px;
+          color: $text-color;
+          font-family: "Sora", sans-serif;
+          border-radius: 10px;
+          margin-bottom: 20px;
+          border: 1px solid $text-color;
+        }
+        .login-btn {
+          width: 50%;
+          background-color: $blue;
+          color: white;
+          padding: 10px 0px;
+          font-family: "Sora", sans-serif;
+          font-size: 1.3em;
+          font-weight: 300;
+          border-radius: 10px;
+          border: none;
+          margin-bottom: 20px;
+        }
+      }
+      .geenaccount {
+        font-family: "Sora", sans-serif;
+        font-size: 1.3em;
+        line-height: 1.5;
+        .aanmelden {
+          font-weight: 600;
+          text-decoration: underline;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) and (min-width: 480px) {
+  .login {
+    display: flex;
+
+    .login-left {
+      width: fit-content;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: 100%;
+
+      /* Add the following properties for vertical centering */
+      min-height: calc(
+        100vh - 200px
+      ); /* Set the height to full viewport height */
+
+      .login-title {
+        font-family: "Sora", sans-serif;
+        font-size: 2.3em;
+        color: $text-color;
+        margin-bottom: 20px;
+      }
+
+      .login-form {
+        display: flex;
+        flex-direction: column;
+        align-items: left;
+
+        .email,
+        .password {
+          width: 50%;
+          padding: 20px 0px;
+          padding-left: 25px;
+          color: $text-color;
+          font-family: "Sora", sans-serif;
+          border-radius: 10px;
+          margin-bottom: 20px;
+          border: 1px solid $text-color;
+        }
+        .login-btn {
+          width: 50%;
+          background-color: $blue;
+          color: white;
+          padding: 15px 0px;
+          font-family: "Sora", sans-serif;
+          font-size: 1.3em;
+          font-weight: 300;
+          border-radius: 10px;
+          border: none;
+          margin-bottom: 20px;
+        }
+      }
+      .geenaccount {
+        font-family: "Sora", sans-serif;
+        font-size: 1.2em;
+        line-height: 1.5;
+        .aanmelden {
+          font-weight: 600;
+          text-decoration: underline;
+          cursor: pointer;
+        }
       }
     }
   }

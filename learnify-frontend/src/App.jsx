@@ -17,7 +17,7 @@ import Navigation from "./components/Navigation/Navigation";
 import VideoPage from "./components/Video/VideoPage";
 import Profile from "./components/Profile/Profile";
 import Categories from "./components/Categories/Categories";
-
+import UserPage from "./components/userPage/userPage";
 import ProtectedRoute from "./components/services/ProtectedRoute";
 import IfLoggedRoute from "./components/services/IfLoggedRoute";
 import apiService from "./components/services/apiService";
@@ -110,6 +110,7 @@ function App() {
               <Route path="/profile/:userid/" element={<Profile />} />
             </Route>
 
+            <Route path="/user/:userid/" element={<UserPage />} />
             <Route path="/bladeren" element={<Bladeren />} />
           </Routes>
         </div>

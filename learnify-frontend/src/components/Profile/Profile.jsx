@@ -10,7 +10,8 @@ import man from "../../assets/man.png";
 import woman from "../../assets/woman.png";
 import rabbit from "../../assets/rabbit.png";
 import bear from "../../assets/bear.png";
-
+import liveicon from "../../assets/live_icon.svg";
+import { motion } from "framer-motion";
 export default function Profile() {
   const { user } = useContext(UserContext);
 
@@ -130,14 +131,7 @@ export default function Profile() {
       </div>
       <div className="profile-main">
         <div className="main-left">
-          <h2 className="main-left-title">Uw profielfoto</h2>
-          <div className="main-left-content">
-            <img
-              src={getProfilePicture(user && user.profile_pic)}
-              className="profilepicture"
-            />
-          </div>
-          <h2 className="aanpassen">Aanpassen :</h2>
+          <h2 className="aanpassen">Profielfoto aanpassen :</h2>
           <div className="avatar">
             <div className="avatar-container">
               <div>
@@ -197,7 +191,7 @@ export default function Profile() {
           <div className="main-right-content">
             {streams.length === 0 ? (
               <p className="no-messages">
-                Er zijn nog geen streams beschikbaar
+                U heeft geen stream of video's geplaatst
               </p>
             ) : (
               streams &&

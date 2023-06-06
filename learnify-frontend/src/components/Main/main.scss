@@ -12,7 +12,7 @@
       width: 60%;
       font-size: 1.2em;
       .featuredstream-streamtitle {
-        font-size: 2.5em;
+        font-size: 2.2vw;
         font-family: "Sora", sans-serif;
         line-height: 1.3;
         color: $text-color;
@@ -24,6 +24,10 @@
         display: flex;
         align-items: center;
         padding-top: 10px;
+        cursor: pointer;
+        &:hover {
+          text-decoration: underline;
+        }
         .featuredstream-streamerimg {
           height: 40px;
           width: 40px;
@@ -108,16 +112,26 @@
           scale: 1.05;
           transition: 0.2s ease-in-out;
         }
-        .featuredstream-thumbnail {
-          border-radius: 15px;
-          width: 100%;
-          height: 58%;
-          object-fit: cover;
-          filter: drop-shadow(-5px 4px 8px rgba(0, 0, 0, 0.25));
-        }
 
+        .thumbnail-container {
+          height: auto;
+          position: relative;
+          .featuredstream-thumbnail {
+            border-radius: 15px;
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            filter: drop-shadow(-5px 4px 8px rgba(0, 0, 0, 0.25));
+          }
+          .live-icon {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translate(-50%, 50%);
+          }
+        }
         .stream-title {
-          margin-top: 10px;
+          margin-top: 20px;
           color: $text-color;
           font-weight: 500;
           font-size: 1em;
@@ -129,6 +143,9 @@
           margin-top: 10px;
           display: flex;
           align-items: center;
+          &:hover {
+            text-decoration: underline;
+          }
           .streamer-img {
             width: 30px;
             height: 30px;
@@ -143,6 +160,67 @@
             color: $smalltext-color;
             font-weight: 300;
           }
+        }
+      }
+    }
+  }
+
+  .allcategories {
+    margin-top: 50px;
+
+    // border-top: 1px solid $text-color;
+    color: $text-color;
+    width: 100%;
+    .categories-title {
+      font-family: "Sora", sans-serif;
+      font-size: 1.6em;
+      font-weight: 600;
+    }
+    .categoriescontainer {
+      margin-top: 25px;
+      width: 100%;
+      display: flex;
+
+      .no-messages {
+        width: 100%;
+        text-align: center;
+        font-family: "Sora", sans-serif;
+        font-size: 1.6em;
+        font-weight: 600;
+        margin-top: 50px;
+        margin-bottom: 100px;
+      }
+      .categorycontainer {
+        width: calc(100% / 6 - 20px);
+        padding: 10px;
+        margin-top: 15px;
+        &:hover {
+          scale: 1.02;
+          transition: 0.2s ease;
+        }
+        .category-image {
+          width: 100%;
+          height: 40vh;
+          object-fit: cover;
+          top: 50%;
+          left: 50%;
+          border-radius: 15px;
+          cursor: pointer;
+          filter: drop-shadow(-5px 4px 8px rgba(0, 0, 0, 0.1));
+          &::after {
+            background: linear-gradient(
+              0deg,
+              rgba(0, 0, 0, 0.4) -43.41%,
+              rgba(0, 0, 0, 0) 121.36%
+            );
+          }
+        }
+
+        .category-title {
+          margin-top: 10px;
+          font-size: 1.4em;
+          font-family: "Sora";
+          font-weight: 500;
         }
       }
     }
@@ -185,7 +263,7 @@
         .featuredstream-thumbnail {
           border-radius: 15px;
           width: 100%;
-          height: 58%;
+          height: auto;
           object-fit: cover;
           filter: drop-shadow(-5px 4px 8px rgba(0, 0, 0, 0.25));
         }
@@ -203,6 +281,9 @@
           margin-top: 10px;
           display: flex;
           align-items: center;
+          &:hover {
+            text-decoration: underline;
+          }
           .streamer-img {
             width: 30px;
             height: 30px;
@@ -216,6 +297,627 @@
             margin-left: 10px;
             color: $smalltext-color;
             font-weight: 300;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  @import "../../utilities/variables";
+
+  .main {
+    margin-top: 15px;
+    .featuredstream-container {
+      width: 100%;
+      display: flex;
+      height: 25vh;
+      padding-bottom: 50px;
+      border-bottom: 1px solid $text-color;
+      display: none;
+      .featuredstream-container-left {
+        width: 60%;
+        font-size: 1.2em;
+        .featuredstream-streamtitle {
+          font-size: 0.8em;
+          font-family: "Sora", sans-serif;
+          line-height: 1.3;
+          color: $text-color;
+          width: 100%;
+          font-weight: 600;
+          cursor: pointer;
+        }
+        .featuredstream-streamercontainer {
+          display: flex;
+          align-items: center;
+          padding-top: 10px;
+          &:hover {
+            text-decoration: underline;
+          }
+          .featuredstream-streamerimg {
+            height: 20px;
+            width: 20px;
+            object-fit: cover;
+            border-radius: 50%;
+            padding-right: 10px;
+          }
+          .featuredstream-streamername {
+            font-size: 0.8em;
+            font-family: "Sora", sans-serif;
+
+            color: $text-color;
+            font-weight: 200;
+          }
+        }
+
+        .featuredstream-description {
+          font-size: 0.6em;
+          font-family: "Sora", sans-serif;
+          padding-top: 10px;
+        }
+      }
+      .featuredstream-container-right {
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+        position: relative;
+        &::before {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 100px;
+          width: calc(100% + 500px);
+          height: 93%;
+          margin-top: 50px;
+          background-color: $blue;
+          opacity: 1;
+          z-index: -1;
+        }
+
+        .featuredstream-iframe {
+          width: 80%;
+          height: 100%;
+          border-radius: 10px;
+          filter: drop-shadow(-5px 4px 8px rgba(0, 0, 0, 0.25));
+        }
+      }
+    }
+
+    .allstreams {
+      margin-top: 0px;
+      // border-top: 1px solid $text-color;
+      color: $text-color;
+      width: 100%;
+      .allstreams-title {
+        font-family: "Sora", sans-serif;
+        font-size: 1.4em;
+        font-weight: 600;
+      }
+      .streamscontainer {
+        margin-top: 25px;
+        width: 100%;
+        display: flex;
+
+        .no-messages {
+          width: 100%;
+          text-align: center;
+          font-family: "Sora", sans-serif;
+          font-size: 1.6em;
+          font-weight: 600;
+          margin-top: 50px;
+          margin-bottom: 100px;
+        }
+        .streamcontainer {
+          width: calc(100% / 2);
+          padding: 10px;
+          padding-left: 0px;
+          cursor: pointer;
+
+          &:hover {
+            scale: 1.05;
+            transition: 0.2s ease-in-out;
+          }
+
+          .thumbnail-container {
+            height: auto;
+            position: relative;
+            .featuredstream-thumbnail {
+              border-radius: 15px;
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+              filter: drop-shadow(-5px 4px 8px rgba(0, 0, 0, 0.25));
+            }
+            .live-icon {
+              position: absolute;
+              bottom: 0;
+              left: 50%;
+              transform: translate(-50%, 50%);
+            }
+          }
+          .stream-title {
+            margin-top: 20px;
+            color: $text-color;
+            font-weight: 500;
+            font-size: 0.9em;
+            font-family: "Sora", sans-serif;
+            width: 100%;
+          }
+
+          .streamerinfo {
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            &:hover {
+              text-decoration: underline;
+            }
+            .streamer-img {
+              width: 25px;
+              height: 25px;
+              border-radius: 50%;
+              object-fit: cover;
+            }
+
+            .streamer-username {
+              font-size: 0.8em;
+              font-family: "Sora", sans-serif;
+              margin-left: 10px;
+              color: $smalltext-color;
+              font-weight: 300;
+            }
+          }
+        }
+      }
+    }
+
+    .allcategories {
+      margin-top: 25px;
+      // border-top: 1px solid $text-color;
+      color: $text-color;
+      width: 100%;
+      .categories-title {
+        font-family: "Sora", sans-serif;
+        font-size: 1.3em;
+        font-weight: 600;
+      }
+      .categoriescontainer {
+        margin-top: 25px;
+        width: 100%;
+        display: flex;
+        overflow-x: scroll;
+        overflow-y: hidden;
+        .no-messages {
+          width: 100%;
+          text-align: center;
+          font-family: "Sora", sans-serif;
+          font-size: 1.6em;
+          font-weight: 600;
+          margin-top: 50px;
+          margin-bottom: 100px;
+        }
+        .categorycontainer {
+          width: calc(100% / 2 - 10px);
+          padding: 10px;
+          margin-top: 15px;
+          &:hover {
+            scale: 1.02;
+            transition: 0.2s ease;
+          }
+          .category-image {
+            width: 100%;
+            height: 30vh;
+            object-fit: cover;
+            top: 50%;
+            left: 50%;
+            border-radius: 15px;
+            cursor: pointer;
+
+            &::after {
+              background: linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.4) -43.41%,
+                rgba(0, 0, 0, 0) 121.36%
+              );
+            }
+          }
+
+          .category-title {
+            margin-top: 10px;
+            font-size: 1em;
+            font-family: "Sora";
+            font-weight: 500;
+          }
+        }
+      }
+    }
+
+    .allvideos {
+      padding-top: 25px;
+      color: $text-color;
+      width: 100%;
+      .allvideos-title {
+        font-family: "Sora", sans-serif;
+        font-size: 1.3em;
+        font-weight: 600;
+      }
+      .videoscontainer {
+        margin-top: 20px;
+        width: 100%;
+        display: flex;
+
+        .no-messages {
+          width: 100%;
+          text-align: center;
+          font-family: "Sora", sans-serif;
+          font-size: 1.6em;
+          font-weight: 600;
+          margin-top: 50px;
+          margin-bottom: 100px;
+        }
+        .videocontainer {
+          width: calc(100% / 2);
+          padding: 10px;
+          padding-left: 0px;
+          cursor: pointer;
+
+          &:hover {
+            scale: 1.05;
+            transition: 0.2s ease-in-out;
+          }
+          .featuredstream-thumbnail {
+            border-radius: 15px;
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            filter: drop-shadow(-5px 4px 8px rgba(0, 0, 0, 0.25));
+          }
+
+          .video-title {
+            margin-top: 10px;
+            color: $text-color;
+            font-weight: 500;
+            font-size: 0.9em;
+            font-family: "Sora", sans-serif;
+            width: 100%;
+          }
+
+          .streamerinfo {
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            &:hover {
+              text-decoration: underline;
+            }
+            .streamer-img {
+              width: 15px;
+              height: 15px;
+              border-radius: 50%;
+              object-fit: cover;
+            }
+
+            .streamer-username {
+              font-size: 0.7em;
+              font-family: "Sora", sans-serif;
+              margin-left: 10px;
+              color: $smalltext-color;
+              font-weight: 300;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+@media (max-width: 768px) and (min-width: 480px) {
+  .main {
+    margin-top: 15px;
+    .featuredstream-container {
+      width: 100%;
+      display: flex;
+      height: 25vh;
+      padding-bottom: 50px;
+      border-bottom: 1px solid $text-color;
+      display: none;
+      .featuredstream-container-left {
+        width: 60%;
+        font-size: 1.2em;
+        .featuredstream-streamtitle {
+          font-size: 0.8em;
+          font-family: "Sora", sans-serif;
+          line-height: 1.3;
+          color: $text-color;
+          width: 100%;
+          font-weight: 600;
+          cursor: pointer;
+        }
+        .featuredstream-streamercontainer {
+          display: flex;
+          align-items: center;
+          padding-top: 10px;
+          &:hover {
+            text-decoration: underline;
+          }
+          .featuredstream-streamerimg {
+            height: 20px;
+            width: 20px;
+            object-fit: cover;
+            border-radius: 50%;
+            padding-right: 10px;
+          }
+          .featuredstream-streamername {
+            font-size: 0.8em;
+            font-family: "Sora", sans-serif;
+
+            color: $text-color;
+            font-weight: 200;
+          }
+        }
+
+        .featuredstream-description {
+          font-size: 0.6em;
+          font-family: "Sora", sans-serif;
+          padding-top: 10px;
+        }
+      }
+      .featuredstream-container-right {
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+        position: relative;
+        &::before {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 100px;
+          width: calc(100% + 500px);
+          height: 93%;
+          margin-top: 50px;
+          background-color: $blue;
+          opacity: 1;
+          z-index: -1;
+        }
+
+        .featuredstream-iframe {
+          width: 80%;
+          height: 100%;
+          border-radius: 10px;
+          filter: drop-shadow(-5px 4px 8px rgba(0, 0, 0, 0.25));
+        }
+      }
+    }
+
+    .allstreams {
+      margin-top: 0px;
+      // border-top: 1px solid $text-color;
+      color: $text-color;
+      width: 100%;
+      .allstreams-title {
+        font-family: "Sora", sans-serif;
+        font-size: 1.4em;
+        font-weight: 600;
+      }
+      .streamscontainer {
+        margin-top: 25px;
+        width: 100%;
+        display: flex;
+
+        .no-messages {
+          width: 100%;
+          text-align: center;
+          font-family: "Sora", sans-serif;
+          font-size: 1.6em;
+          font-weight: 600;
+          margin-top: 50px;
+          margin-bottom: 100px;
+        }
+        .streamcontainer {
+          width: calc(100% / 2);
+          padding: 15px;
+          padding-left: 0px;
+          cursor: pointer;
+
+          &:hover {
+            scale: 1.05;
+            transition: 0.2s ease-in-out;
+          }
+
+          .thumbnail-container {
+            height: auto;
+            position: relative;
+            .featuredstream-thumbnail {
+              border-radius: 15px;
+              width: 100%;
+              height: auto;
+              object-fit: cover;
+              filter: drop-shadow(-5px 4px 8px rgba(0, 0, 0, 0.25));
+            }
+            .live-icon {
+              position: absolute;
+              bottom: 0;
+              left: 50%;
+              transform: translate(-50%, 50%);
+            }
+          }
+          .stream-title {
+            margin-top: 20px;
+            color: $text-color;
+            font-weight: 500;
+            font-size: 0.9em;
+            font-family: "Sora", sans-serif;
+            width: 100%;
+          }
+
+          .streamerinfo {
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            &:hover {
+              text-decoration: underline;
+            }
+            .streamer-img {
+              width: 25px;
+              height: 25px;
+              border-radius: 50%;
+              object-fit: cover;
+            }
+
+            .streamer-username {
+              font-size: 0.8em;
+              font-family: "Sora", sans-serif;
+              margin-left: 10px;
+              color: $smalltext-color;
+              font-weight: 300;
+            }
+          }
+        }
+      }
+    }
+
+    .allcategories {
+      margin-top: 25px;
+      // border-top: 1px solid $text-color;
+      color: $text-color;
+      width: 100%;
+      .categories-title {
+        font-family: "Sora", sans-serif;
+        font-size: 1.3em;
+        font-weight: 600;
+      }
+      .categoriescontainer {
+        margin-top: 25px;
+        width: 100%;
+        display: flex;
+        overflow-x: scroll;
+        overflow-y: hidden;
+        .no-messages {
+          width: 100%;
+          text-align: center;
+          font-family: "Sora", sans-serif;
+          font-size: 1.6em;
+          font-weight: 600;
+          margin-top: 50px;
+          margin-bottom: 100px;
+        }
+        .categorycontainer {
+          width: calc(100% / 2 - 10px);
+          padding: 10px;
+          margin-top: 15px;
+          &:hover {
+            scale: 1.02;
+            transition: 0.2s ease;
+          }
+          .category-image {
+            width: 100%;
+            height: 30vh;
+            object-fit: cover;
+            top: 50%;
+            left: 50%;
+            border-radius: 15px;
+            cursor: pointer;
+
+            &::after {
+              background: linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.4) -43.41%,
+                rgba(0, 0, 0, 0) 121.36%
+              );
+            }
+          }
+
+          .category-title {
+            margin-top: 10px;
+            font-size: 1em;
+            font-family: "Sora";
+            font-weight: 500;
+          }
+        }
+      }
+    }
+
+    .allvideos {
+      padding-top: 25px;
+      color: $text-color;
+      width: 100%;
+      .allvideos-title {
+        font-family: "Sora", sans-serif;
+        font-size: 1.3em;
+        font-weight: 600;
+      }
+      .videoscontainer {
+        margin-top: 20px;
+        width: 100%;
+        display: flex;
+
+        .no-messages {
+          width: 100%;
+          text-align: center;
+          font-family: "Sora", sans-serif;
+          font-size: 1.6em;
+          font-weight: 600;
+          margin-top: 50px;
+          margin-bottom: 100px;
+        }
+        .videocontainer {
+          width: calc(100% / 2);
+          padding: 10px;
+          padding-left: 0px;
+          cursor: pointer;
+
+          &:hover {
+            scale: 1.05;
+            transition: 0.2s ease-in-out;
+          }
+          .featuredstream-thumbnail {
+            border-radius: 15px;
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            filter: drop-shadow(-5px 4px 8px rgba(0, 0, 0, 0.25));
+          }
+
+          .video-title {
+            margin-top: 10px;
+            color: $text-color;
+            font-weight: 500;
+            font-size: 0.9em;
+            font-family: "Sora", sans-serif;
+            width: 100%;
+          }
+
+          .streamerinfo {
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            &:hover {
+              text-decoration: underline;
+            }
+            .streamer-img {
+              width: 15px;
+              height: 15px;
+              border-radius: 50%;
+              object-fit: cover;
+            }
+
+            .streamer-username {
+              font-size: 0.7em;
+              font-family: "Sora", sans-serif;
+              margin-left: 10px;
+              color: $smalltext-color;
+              font-weight: 300;
+            }
           }
         }
       }

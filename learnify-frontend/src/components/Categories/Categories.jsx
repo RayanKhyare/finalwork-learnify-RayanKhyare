@@ -5,7 +5,7 @@ import apiService from "../services/apiService";
 import Thumbnail from "../services/thumbnailService";
 import rechten from "../../assets/rechten.jpeg";
 import stockimage from "../../assets/stockimage_man.jpg";
-
+import { motion } from "framer-motion";
 import { UserContext } from "../../App";
 import { getProfilePicture } from "../services/profilePicService";
 export default function Categories() {
@@ -146,7 +146,9 @@ export default function Categories() {
           }`}
         >
           {streams.length === 0 ? (
-            <p className="no-messages">Er zijn nog geen streams beschikbaar</p>
+            <p className="no-messages">
+              Er zijn nog geen streams beschikbaar voor deze categorie
+            </p>
           ) : (
             streams &&
             streams.map((stream, index) => (
@@ -175,7 +177,9 @@ export default function Categories() {
           }`}
         >
           {videos.length === 0 ? (
-            <p className="no-messages">Er zijn nog geen streams beschikbaar</p>
+            <p className="no-messages">
+              Er zijn nog geen videos beschikbaar voor deze categorie
+            </p>
           ) : (
             videos &&
             videos.map((video, index) => (

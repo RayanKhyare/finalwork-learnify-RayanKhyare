@@ -1,11 +1,11 @@
 import React from "react";
 
-function ReceivedMessage({ user, time, message }) {
+function ReceivedMessage({ user, time, message, role }) {
   return (
     <div className="receivedmessage">
       <div className="receivedmessage-top">
-        <p className="receivedmessage-user">{user},</p>
-        <p className="receivedmessage-time">{time}</p>
+        <p className="receivedmessage-user">{user}</p>
+        {role == "streamer" && <p className="sendmessage-streamerdot"></p>}
       </div>
       <div className="receivedmessage-content">
         <p className="receivedmessage-message">{message}</p>

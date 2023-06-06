@@ -117,6 +117,10 @@ router.delete("/:streamId", async (req, res) => {
       where: { stream_id: parseInt(streamId) },
     });
 
+    await prisma.file.deleteMany({
+      where: { stream_id: parseInt(streamId) },
+    });
+
     // Delete the options and votes associated with each poll
     for (const poll of polls) {
       await prisma.poll_option.deleteMany({

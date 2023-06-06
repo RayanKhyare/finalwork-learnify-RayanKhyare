@@ -9,12 +9,19 @@ import checkmark from "../../assets/checkmark.svg";
 import downarrow from "../../assets/down-arrow.svg";
 import trash from "../../assets/trash.svg";
 import { UserContext } from "../../App";
+import { motion } from "framer-motion";
+import { getProfilePicture } from "../services/profilePicService";
 export default function VideoPage() {
   const { videoid } = useParams();
   const [videoData, setVideoData] = useState({});
   const [showStreamerTools, setShowStreamerTools] = useState(false);
   const [videoTitle, setVideoTitle] = useState("");
   const [videoBeschrijving, setVideoBeschrijving] = useState("");
+  const [videoURL, setVideoURL] = useState("");
+  const [streamer, setStreamer] = useState("");
+
+  const [streamerProfilePic, setStreamerProfilePic] = useState(null);
+  const [categoryName, setCategoryName] = useState("");
 
   const { user } = useContext(UserContext);
 
@@ -26,12 +33,21 @@ export default function VideoPage() {
     setIsEditing(true);
   };
 
+  const categoryLink = () => {
+    navigate(`/categories/${videoData.category_id}`);
+  };
+
+  const handleUserClick = (id) => {
+    navigate(`/user/${id}`);
+  };
+
   const handleSaveClick = async () => {
     // Perform your save/update logic here
     try {
       await apiService.updateVideo(videoData.id, {
         title: videoTitle,
         description: videoBeschrijving,
+        iframe: videoURL,
       });
       window.location.reload();
     } catch (error) {
@@ -55,6 +71,16 @@ export default function VideoPage() {
         setVideoData(response.data);
         setVideoBeschrijving(response.data.description);
         setVideoTitle(response.data.title);
+        setVideoURL(response.data.iframe);
+
+        const category = await apiService.getCategoryById(
+          response.data.category_id
+        );
+        setCategoryName(category.data.name);
+
+        const streamer = await apiService.getUserById(response.data.user_id);
+        setStreamer(streamer.data.username);
+        setStreamerProfilePic(streamer.data.profile_pic);
       } catch (error) {
         console.error(error);
       }
@@ -82,6 +108,7 @@ export default function VideoPage() {
           )}
           {isEditing && (
             <div className="titelupdatediv">
+              <label className="title-label-aanpassen">Titel</label>
               <input
                 type="text"
                 className="title-input"
@@ -113,7 +140,36 @@ export default function VideoPage() {
             </button>
           </div>
         </div>
+        {!isEditing && (
+          <h3 className="stream-category" onClick={categoryLink}>
+            {categoryName && categoryName}
+          </h3>
+        )}
+        {!isEditing && (
+          <div
+            className="streamer-container"
+            onClick={() => handleUserClick(videoData && videoData.user_id)}
+          >
+            <img
+              src={getProfilePicture(streamerProfilePic && streamerProfilePic)}
+              alt=""
+              className="streamer-streamerimg"
+            />
+            <h2 className="streamer-streamername">{streamer && streamer}</h2>
+          </div>
+        )}
 
+        {isEditing && (
+          <div className="urlupdatediv">
+            <label className="urllabel">URL Aanpassen</label>
+            <input
+              type="text"
+              className="url-input "
+              onChange={(e) => setVideoURL(e.target.value)}
+              value={videoURL}
+            ></input>
+          </div>
+        )}
         <h2 className="beschrijving-title">Beschrijving</h2>
         {!isEditing && (
           <p className="beschrijving">

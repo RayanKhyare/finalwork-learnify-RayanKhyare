@@ -169,6 +169,16 @@ const deletePoll = (stream_id, poll_id) => {
   return axios.delete(`${API_URL}/polls/stream/${stream_id}/poll/${poll_id}`);
 };
 
+//Polls
+
+const postFile = (data) => {
+  return axios.post(`${API_URL}/files`, data);
+};
+
+const getFilefromStream = (id) => {
+  return axios.get(`${API_URL}/files/stream/${id}`);
+};
+
 export default {
   register,
   login,
@@ -203,4 +213,6 @@ export default {
   deleteUser,
   updateVideo,
   deleteVideo,
+  postFile,
+  getFilefromStream,
 };

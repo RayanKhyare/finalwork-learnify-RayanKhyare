@@ -10,6 +10,15 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model File {
+  id        Int      @id @default(autoincrement())
+  stream_id Int?
+  filename  String
+  url       String
+  stream    Streams? @relation(fields: [stream_id], references: [id])
+  // Include any additional fields you need for metadata
+}
+
 // Define Roles table
 model Roles {
   id    Int     @id @default(autoincrement())
@@ -74,6 +83,7 @@ model Streams {
   questions   questions[]
   messages    Messages[]
   answers     answers[]
+  file        File[]
 }
 
 // Define Polls table

@@ -5,9 +5,10 @@ import checksign from "../../assets/check.svg";
 import apiService from "../services/apiService";
 import extractVideoId from "../services/extractVideoid";
 import axios from "axios";
-
+import { motion } from "framer-motion";
 import jwt_decode from "jwt-decode";
 import { getProfilePicture } from "../services/profilePicService";
+import googleApiKey from "../services/apiKey";
 export default function AddVideo() {
   const [iframe, setIframe] = useState("");
   const [title, setTitle] = useState("");
@@ -16,6 +17,9 @@ export default function AddVideo() {
   const [categories, setCategories] = useState("");
   const [user_id, setuser_id] = useState("");
   const [error, setError] = useState("");
+
+  const [urlIsLoading, setUrlIsLoading] = useState(false);
+  const [isUrlValid, setIsUrlValid] = useState(false);
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -27,41 +31,54 @@ export default function AddVideo() {
     }
   });
 
-  const checkUrl = async (e) => {
+  const checkUrl = async (e, iframe) => {
     e.preventDefault();
-    try {
-      // Extract video ID from YouTube URL
-      const videoId = extractVideoId(iframe);
-      const apiKEY = "AIzaSyDAd7pwS_8namloYU3rtsSeKo28-wBKDrQ";
-      // Make API request to YouTube Data API
+    setUrlIsLoading(true);
+    setTimeout(async () => {
+      try {
+        // Extract video ID from YouTube URL
+        const videoId = extractVideoId(iframe);
 
-      if (!videoId) {
-        // Handle invalid URL
-        setError("Invalid YouTube URL");
-        return;
+        setError("");
+
+        if (!videoId) {
+          // Handle invalid URL
+          setError(
+            "     Invalid YouTube URL , the format should be 'https://www.youtube.com/watch?v='uw_stream_id'"
+          );
+          return;
+        }
+
+        const response = await axios.get(
+          `https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${videoId}&key=${googleApiKey.googleApiKey}`
+        );
+
+        if (response.data.items.length === 0) {
+          // Handle non-existent video
+          setError("YouTube video not found");
+          return;
+        }
+
+        // Extract title and description from API response
+        const { title, description } = response.data.items[0].snippet;
+
+        // Update input values
+        setTitle(title);
+        setDescription(description);
+        setUrlIsLoading(false);
+        setIsUrlValid(true);
+      } catch (error) {
+        console.error(error);
+        setError("An error occurred");
       }
-
-      const response = await axios.get(
-        `https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${videoId}&key=${apiKEY}`
-      );
-
-      if (response.data.items.length === 0) {
-        // Handle non-existent video
-        setError("YouTube video not found");
-        return;
-      }
-
-      // Extract title and description from API response
-      const { title, description } = response.data.items[0].snippet;
-
-      // Update input values
-      setTitle(title);
-      setDescription(description);
-    } catch (error) {
-      console.error(error);
-      setError("An error occurred");
-    }
+    }, 1000);
   };
+
+  function handleFileData(file, name) {
+    setSelectedFile(file);
+    setFileName(name);
+    console.log(file, name);
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -113,17 +130,20 @@ export default function AddVideo() {
         <div className="firstline">
           <div className="addstream-field">
             <label className="addstream-form-label">YouTube link</label>
-            <div>
+            <div className="input-flex">
               <input
                 type="text"
                 className="input iframe"
                 value={iframe}
                 placeholder="Voer de YouTube link in"
-                onChange={(e) => setIframe(e.target.value)}
+                onChange={(e) => {
+                  setIframe(e.target.value);
+                  checkUrl(e, e.target.value);
+                }}
               />
-              <button className="checkurlbtn" type="submit" onClick={checkUrl}>
-                Check URL
-              </button>
+              {urlIsLoading && <div className="loader-url"></div>}
+
+              {isUrlValid && <div className="checkmark">✅</div>}
             </div>
           </div>
         </div>
@@ -131,7 +151,7 @@ export default function AddVideo() {
         <div className="firstline-vertical">
           <div>
             <div className="addstream-field">
-              <label className="addstream-form-label">Livestream title</label>
+              <label className="addstream-form-label">Video title</label>
               <input
                 type="text"
                 className="input"
@@ -152,9 +172,13 @@ export default function AddVideo() {
               >
                 <option value="">Kies een opleiding</option>
                 {categories &&
-                  categories.map((category, index) => (
-                    <option value={category.id}>{category.name}</option>
-                  ))}
+                  categories
+                    .sort((a, b) => a.name.localeCompare(b.name))
+                    .map((category, index) => (
+                      <option value={category.id} key={index}>
+                        {category.name}
+                      </option>
+                    ))}
               </select>
             </div>
           </div>
