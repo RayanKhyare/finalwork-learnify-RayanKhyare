@@ -26,3 +26,4 @@ dist-ssr
 .env
 ./src/fonts
 ./src/assets
+./src/components/services/apiKey.js
