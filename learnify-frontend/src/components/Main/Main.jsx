@@ -188,7 +188,8 @@ export default function Main() {
 
       <div className="allstreams">
         <h2 className="allstreams-title">
-          <span className="blue">Alle</span> streams
+          <span className="blue">Streams</span> die je volgens ons leuk zult
+          vinden
         </h2>
         <div className="streamscontainer">
           {allStreams.length === 0 ? (
@@ -248,7 +249,7 @@ export default function Main() {
 
       <div className="allvideos">
         <h2 className="allvideos-title">
-          <span className="blue">Alle</span> videos
+          Aanbevolen <span className="blue">videos</span>
         </h2>
         <div className="videoscontainer">
           {allVideos.length === 0 ? (
