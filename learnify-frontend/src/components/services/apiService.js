@@ -1,6 +1,8 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:4000/api/v1"; // replace with your backend URL
+// const API_URL = "http://localhost:4000/api/v1";
+const API_URL =
+  "https://finalwork-learnify-rayankhyare-production-74ed.up.railway.app/api/v1"; // replace with your backend URL
 const token = localStorage.getItem("token");
 
 //LOGIN

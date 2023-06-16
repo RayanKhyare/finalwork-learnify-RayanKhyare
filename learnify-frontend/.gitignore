@@ -25,3 +25,4 @@ dist-ssr
 
 
 ./src/components/services/apiKey.js
+.vercel

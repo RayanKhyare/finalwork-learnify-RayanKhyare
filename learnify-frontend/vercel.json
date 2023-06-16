@@ -1,0 +1,60 @@
+{
+  "rewrites": [
+    {
+      "source": "/",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/create",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/stream/:streamid/",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/login",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/register",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/main",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/startstream",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/addvideos",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/video/:videoid",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/categories/:categoryid",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/dashboard/:streamid/",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/profile/:userid/",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/user/:userid/",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/bladeren",
+      "destination": "/index.html"
+    }
+  ]
+}
