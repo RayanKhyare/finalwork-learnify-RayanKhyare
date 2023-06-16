@@ -17,10 +17,11 @@ import Navigation from "./components/Navigation/Navigation";
 import VideoPage from "./components/Video/VideoPage";
 import Profile from "./components/Profile/Profile";
 import Categories from "./components/Categories/Categories";
-import UserPage from "./components/userPage/userPage";
 import ProtectedRoute from "./components/services/ProtectedRoute";
 import IfLoggedRoute from "./components/services/IfLoggedRoute";
+
 import apiService from "./components/services/apiService";
+import PageUser from "./components/PageUser/PageUser";
 
 import jwt_decode from "jwt-decode";
 import FirstVisit from "./components/FirstVisitPopUp/FirstVisit";
@@ -110,7 +111,7 @@ function App() {
               <Route path="/profile/:userid/" element={<Profile />} />
             </Route>
 
-            <Route path="/user/:userid/" element={<UserPage />} />
+            <Route path="/user/:userid/" element={<PageUser />} />
             <Route path="/bladeren" element={<Bladeren />} />
           </Routes>
         </div>

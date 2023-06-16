@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useContext } from "react";
-import "./userpage.scss";
+import "./pageuser.scss";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import apiService from "../services/apiService";
 import profilepicture from "../../assets/user.png";
@@ -12,7 +12,8 @@ import rabbit from "../../assets/rabbit.png";
 import bear from "../../assets/bear.png";
 import liveicon from "../../assets/live_icon.svg";
 import { motion } from "framer-motion";
-export default function UserPage() {
+
+export default function PageUser() {
   const [streams, setStreams] = useState([]);
   const [videos, setVideos] = useState([]);
   const [user, setUser] = useState({});
@@ -81,6 +82,7 @@ export default function UserPage() {
           )}
         </div>
       </div>
+
       <div className="videos">
         <h2 className="videos-title">Video's</h2>
         <div className="videoscontainer">
