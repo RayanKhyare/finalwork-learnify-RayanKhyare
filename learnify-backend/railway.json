@@ -1,24 +1,19 @@
 {
   "services": {
-    "server": {
-      "command": "npm start",
+    "index": {
+      "buildCommand": "npm run build",
+      "command": "nodemon index.js",
       "env": {
-        "PORT": 4000
-      }
-    },
-    "socket": {
-      "command": "node socketServer.js",
-      "env": {
+        "NODE_ENV": "production",
+        "PORT": 4000,
         "SOCKETPORT": 5000
       }
     }
   },
   "routes": {
     "/(.*)": {
-      "destination": "server"
-    },
-    "/socket(.*)": {
-      "destination": "socket"
+      "type": "static",
+      "path": "public"
     }
   }
 }
