@@ -5,7 +5,7 @@
       "command": "nodemon index.js",
       "env": {
         "NODE_ENV": "production",
-        "SERVERPORT": 4000,
+        "PORT": 4000,
         "SOCKETPORT": 5000
       }
     }
