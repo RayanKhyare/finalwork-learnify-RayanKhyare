@@ -1,12 +1,15 @@
 const app = require("./app.js");
 const socketServer = require("./socketServer");
 
-const port = 4000;
-const SOCKETPORT = 5000;
+const port = process.env.PORT || 4000;
+const socketPort = process.env.SOCKETPORT || 5000;
 
-app.listen(port, () => console.log("Server up and running"));
-
-// Start the SocketIo server
-socketServer.listen(SOCKETPORT, () => {
-  console.log("SocketIo server started");
-});
+if (process.env.RAILWAY === "socket") {
+  socketServer.listen(socketPort, () => {
+    console.log("Socket server started");
+  });
+} else {
+  app.listen(port, () => {
+    console.log("Server up and running");
+  });
+}
