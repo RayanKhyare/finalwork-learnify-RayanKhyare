@@ -11,7 +11,6 @@ router.get("/", async (req, res) => {
 
 router.post("/", async (req, res) => {
   //Validate schema
-
   const { stream_id, question_id, username, answer } = req.body;
 
   const answerBody = await prisma.answers.create({

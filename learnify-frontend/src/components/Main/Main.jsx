@@ -24,6 +24,10 @@ export default function Main() {
     navigate("/categories/" + id);
   };
 
+  const handleBladerenClick = () => {
+    navigate("/bladeren");
+  };
+
   useEffect(() => {
     async function fetchFeaturedStream() {
       try {
@@ -187,16 +191,21 @@ export default function Main() {
       )}
 
       <div className="allstreams">
-        <h2 className="allstreams-title">
-          <span className="blue">Streams</span> die je volgens ons leuk zult
-          vinden
-        </h2>
+        <div className="allstream-header">
+          <h2 className="allstreams-title">
+            <span className="blue">Streams</span> die je volgens ons leuk zult
+            vinden
+          </h2>
+          <button className="allesbekijkenbtn" onClick={handleBladerenClick}>
+            Alles bekijken
+          </button>
+        </div>
         <div className="streamscontainer">
           {allStreams.length === 0 ? (
             <p className="no-messages">Er zijn nog geen streams beschikbaar</p>
           ) : (
             allStreams &&
-            allStreams.map((stream, index) => (
+            allStreams.slice(0, 5).map((stream, index) => (
               <div
                 className="streamcontainer"
                 key={index}
@@ -224,10 +233,15 @@ export default function Main() {
       </div>
 
       <div className="allcategories">
-        <h2 className="categories-title">
-          <span className="blue">Opleidingen</span> waarin u geïnteresseerd zou
-          kunnen zijn
-        </h2>
+        <div className="allcategories-header">
+          <h2 className="categories-title">
+            <span className="blue">Opleidingen</span> waarin u geïnteresseerd
+            zou kunnen zijn
+          </h2>
+          <button className="allesbekijkenbtn" onClick={handleBladerenClick}>
+            Alles bekijken
+          </button>
+        </div>
         <div className="categoriescontainer">
           {categories.length === 0 ? (
             <p className="no-messages">Er zijn geen categorieën beschikbaar</p>
@@ -248,15 +262,20 @@ export default function Main() {
       </div>
 
       <div className="allvideos">
-        <h2 className="allvideos-title">
-          Aanbevolen <span className="blue">videos</span>
-        </h2>
+        <div className="allvideos-header">
+          <h2 className="allvideos-title">
+            Aanbevolen <span className="blue">videos</span>
+          </h2>
+          <button className="allesbekijkenbtn" onClick={handleBladerenClick}>
+            Alles bekijken
+          </button>
+        </div>
         <div className="videoscontainer">
           {allVideos.length === 0 ? (
             <p className="no-messages">Er zijn nog geen videos beschikbaar</p>
           ) : (
             allVideos &&
-            allVideos.map((video, index) => (
+            allVideos.slice(0, 5).map((video, index) => (
               <div
                 className="videocontainer"
                 key={index}

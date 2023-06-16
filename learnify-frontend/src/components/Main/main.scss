@@ -83,16 +83,40 @@
     // border-top: 1px solid $text-color;
     color: $text-color;
     width: 100%;
-    .allstreams-title {
-      font-family: "Sora", sans-serif;
-      font-size: 1.6em;
-      font-weight: 600;
+    .allstream-header {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+
+      .allstreams-title {
+        font-family: "Sora", sans-serif;
+        font-size: 1.6em;
+        font-weight: 600;
+      }
+
+      .allesbekijkenbtn {
+        background: #31abdb;
+        border-radius: 5px;
+        border: none;
+        padding: 10px 20px;
+
+        font-family: "SF Pro Text";
+        font-style: normal;
+        font-weight: 400;
+        font-size: 1em;
+        line-height: 18px;
+        display: flex;
+        align-items: center;
+        text-align: center;
+        cursor: pointer;
+        color: #f2f2f2;
+      }
     }
     .streamscontainer {
       margin-top: 25px;
       width: 100%;
       display: flex;
-
+      flex-wrap: wrap;
       .no-messages {
         width: 100%;
         text-align: center;
@@ -103,7 +127,7 @@
         margin-bottom: 100px;
       }
       .streamcontainer {
-        width: calc(100% / 5);
+        width: calc(100% / 5 - 10px);
         padding: 10px;
         padding-left: 0px;
         cursor: pointer;
@@ -171,10 +195,33 @@
     // border-top: 1px solid $text-color;
     color: $text-color;
     width: 100%;
-    .categories-title {
-      font-family: "Sora", sans-serif;
-      font-size: 1.6em;
-      font-weight: 600;
+    .allcategories-header {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+
+      .categories-title {
+        font-family: "Sora", sans-serif;
+        font-size: 1.6em;
+        font-weight: 600;
+      }
+      .allesbekijkenbtn {
+        background: #31abdb;
+        border-radius: 5px;
+        border: none;
+        padding: 10px 20px;
+
+        font-family: "SF Pro Text";
+        font-style: normal;
+        font-weight: 400;
+        font-size: 1em;
+        line-height: 18px;
+        display: flex;
+        align-items: center;
+        text-align: center;
+        cursor: pointer;
+        color: #f2f2f2;
+      }
     }
     .categoriescontainer {
       margin-top: 25px;
@@ -231,16 +278,39 @@
 
     color: $text-color;
     width: 100%;
-    .allvideos-title {
-      font-family: "Sora", sans-serif;
-      font-size: 1.6em;
-      font-weight: 600;
+
+    .allvideos-header {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+      .allvideos-title {
+        font-family: "Sora", sans-serif;
+        font-size: 1.6em;
+        font-weight: 600;
+      }
+      .allesbekijkenbtn {
+        background: #31abdb;
+        border-radius: 5px;
+        border: none;
+        padding: 10px 20px;
+
+        font-family: "SF Pro Text";
+        font-style: normal;
+        font-weight: 400;
+        font-size: 1em;
+        line-height: 18px;
+        display: flex;
+        align-items: center;
+        text-align: center;
+        cursor: pointer;
+        color: #f2f2f2;
+      }
     }
     .videoscontainer {
       margin-top: 25px;
       width: 100%;
       display: flex;
-
+      flex-wrap: wrap;
       .no-messages {
         width: 100%;
         text-align: center;
@@ -251,7 +321,7 @@
         margin-bottom: 100px;
       }
       .videocontainer {
-        width: calc(100% / 5);
+        width: calc(100% / 5 - 10px);
         padding: 10px;
         padding-left: 0px;
         cursor: pointer;

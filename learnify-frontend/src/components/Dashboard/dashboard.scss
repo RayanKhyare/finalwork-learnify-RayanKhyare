@@ -397,7 +397,7 @@
   position: absolute;
   right: 0;
   transform: translateX(0%);
-  margin-right: 8px;
+  // margin-right: 8px;
   .chat-top {
     width: 100%;
     height: 5%;
@@ -606,19 +606,18 @@
       width: 100%;
       .poll-input {
         margin-top: 25px;
-        width: 100%;
+        width: calc(100% - 25px);
         background-color: #ffc8ad;
         border: none;
         border-radius: 5px;
         padding: 15px 0px;
-
         font-family: "Sora", sans-serif;
+        padding-left: 25px;
         color: $text-color;
       }
       .poll-input::placeholder {
         color: $text-color;
         font-weight: 500;
-        padding-left: 25px;
       }
 
       .poll-sturen {
@@ -675,19 +674,18 @@
       width: 100%;
       .qanda-input {
         margin-top: 25px;
-        width: 100%;
         background-color: #ffc8ad;
         border: none;
         border-radius: 5px;
         padding: 15px 0px;
-
+        width: calc(100% - 25px);
+        padding-left: 25px;
         font-family: "Sora", sans-serif;
         color: $text-color;
       }
       .qanda-input::placeholder {
         color: $text-color;
         font-weight: 500;
-        padding-left: 25px;
       }
 
       .qanda-sturen {
@@ -1363,19 +1361,18 @@
         width: 100%;
         .poll-input {
           margin-top: 25px;
-          width: 100%;
+          width: calc(100% - 25px);
           background-color: #ffc8ad;
           border: none;
           border-radius: 5px;
           padding: 15px 0px;
-
           font-family: "Sora", sans-serif;
+          padding-left: 25px;
           color: $text-color;
         }
         .poll-input::placeholder {
           color: $text-color;
           font-weight: 500;
-          padding-left: 25px;
         }
 
         .poll-sturen {
@@ -1432,19 +1429,18 @@
         width: 100%;
         .qanda-input {
           margin-top: 25px;
-          width: 100%;
           background-color: #ffc8ad;
           border: none;
           border-radius: 5px;
           padding: 15px 0px;
-
+          width: calc(100% - 25px);
+          padding-left: 25px;
           font-family: "Sora", sans-serif;
           color: $text-color;
         }
         .qanda-input::placeholder {
           color: $text-color;
           font-weight: 500;
-          padding-left: 25px;
         }
 
         .qanda-sturen {
@@ -2131,19 +2127,18 @@
         width: 100%;
         .poll-input {
           margin-top: 25px;
-          width: 100%;
+          width: calc(100% - 25px);
           background-color: #ffc8ad;
           border: none;
           border-radius: 5px;
           padding: 15px 0px;
-
           font-family: "Sora", sans-serif;
+          padding-left: 25px;
           color: $text-color;
         }
         .poll-input::placeholder {
           color: $text-color;
           font-weight: 500;
-          padding-left: 25px;
         }
 
         .poll-sturen {
@@ -2200,19 +2195,18 @@
         width: 100%;
         .qanda-input {
           margin-top: 25px;
-          width: 100%;
           background-color: #ffc8ad;
           border: none;
           border-radius: 5px;
           padding: 15px 0px;
-
+          width: calc(100% - 25px);
+          padding-left: 25px;
           font-family: "Sora", sans-serif;
           color: $text-color;
         }
         .qanda-input::placeholder {
           color: $text-color;
           font-weight: 500;
-          padding-left: 25px;
         }
 
         .qanda-sturen {

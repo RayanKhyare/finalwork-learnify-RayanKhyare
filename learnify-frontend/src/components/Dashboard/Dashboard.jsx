@@ -71,12 +71,11 @@ export default function Dashboard() {
 
   const navigate = useNavigate();
 
+  // Control the body overflow based on the showPollContainer state
   useEffect(() => {
     if (showPollContainer) {
-      // Add "overflow: hidden" to the body element
       document.body.style.overflow = "hidden";
     } else {
-      // Remove the "overflow: hidden" style from the body element
       document.body.style.overflow = "";
     }
   }, [showPollContainer]);
@@ -85,7 +84,6 @@ export default function Dashboard() {
     if (showQandaContainer) {
       document.body.style.overflow = "hidden";
     } else {
-      // Remove the "overflow: hidden" style from the body element
       document.body.style.overflow = "";
     }
   }, [showQandaContainer]);
@@ -112,6 +110,7 @@ export default function Dashboard() {
     }));
   };
 
+  // Save the updated data
   const handleSaveClick = async () => {
     // Perform your save/update logic here
     try {
@@ -126,6 +125,7 @@ export default function Dashboard() {
     }
   };
 
+  // Handle the end of the stream by posting a video and deleting the stream afterwards
   const handleStopStream = async () => {
     try {
       const response = await apiService.postVideo({
@@ -148,28 +148,39 @@ export default function Dashboard() {
     }
   };
 
+  // Handle the delete of a Q&A
   const handleDeleteQuestion = async (id, index) => {
     try {
+      // Delete the Q&A with the specified id
       await apiService.deleteQuestion(id);
+
+      // Update the questions state by removing the deleted question
       setQuestions((prevQuestions) => {
         const updatedQuestions = [...prevQuestions];
         updatedQuestions.splice(index, 1);
         return updatedQuestions;
       });
+
+      // Hide the Q&A overlay (optional)
       // setShowQandAOverlay(false);
     } catch (error) {
       console.error(error);
     }
   };
 
+  // Handle the delete of a poll
   const handleDeletePolls = async (poll_id, index) => {
     try {
       await apiService.deletePoll(streamid, poll_id);
+
+      // Update the polls state by removing the deleted poll
       setPoll((prevPolls) => {
         const updatedPolls = [...prevPolls];
         updatedPolls.splice(index, 1);
         return updatedPolls;
       });
+
+      // Hide the poll overlay
       setShowPollOverlay(false);
     } catch (error) {
       console.error(error);
@@ -208,8 +219,6 @@ export default function Dashboard() {
   // Send Chat message
   const sendMessage = async () => {
     if (canSendMessage) {
-      // Your logic to send the message goes here
-
       const username = user.username || "Anoniem";
 
       socket.emit("send_message", { username: username, message, room });
@@ -382,8 +391,10 @@ export default function Dashboard() {
 
   useEffect(() => {
     const handleReceiveVote = (data) => {
-      console.log("Received vote");
+      // Show the poll overlay
       setShowPollOverlay(true);
+
+      // Update the vote state by adding the received vote
       setVote((prevVotes) => [
         ...prevVotes,
         {
@@ -394,6 +405,7 @@ export default function Dashboard() {
         },
       ]);
 
+      // Update the poll state by updating the vote count and totalVotes
       setPoll((prevPoll) => {
         const updatedPoll = prevPoll.map((pollItem) => {
           if (pollItem.id === data.poll_id) {
@@ -502,13 +514,6 @@ export default function Dashboard() {
                 poll.options[0].votes.length + poll.options[1].votes.length,
             },
           ]);
-
-          // setOption1Count(
-          //   (prevCount) => prevCount + poll.options[0].votes.length
-          // );
-          // setOption2Count(
-          //   (prevCount) => prevCount + poll.options[1].votes.length
-          // );
         });
       } catch (error) {
         console.error(error);
