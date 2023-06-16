@@ -1,0 +1,19 @@
+{
+  "services": {
+    "index": {
+      "buildCommand": "npm run build",
+      "command": "nodemon index.js",
+      "env": {
+        "NODE_ENV": "production",
+        "PORT": 3000,
+        "SOCKETPORT": 5000
+      }
+    }
+  },
+  "routes": {
+    "/(.*)": {
+      "type": "static",
+      "path": "public"
+    }
+  }
+}
