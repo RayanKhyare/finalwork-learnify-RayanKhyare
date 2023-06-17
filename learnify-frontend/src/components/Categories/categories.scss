@@ -81,7 +81,7 @@
         margin-top: 50px;
       }
       .streamcontainer {
-        width: calc(100% / 4);
+        width: calc(100% / 4 - 15px);
         padding: 10px;
         padding-left: 0px;
         cursor: pointer;
@@ -175,7 +175,7 @@
         margin-top: 50px;
       }
       .streamcontainer {
-        width: calc(100% / 4);
+        width: calc(100% / 4 - 15px);
         padding: 10px;
         padding-left: 0px;
         cursor: pointer;

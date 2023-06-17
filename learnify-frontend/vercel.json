@@ -5,11 +5,7 @@
       "destination": "/index.html"
     },
     {
-      "source": "/create",
-      "destination": "/index.html"
-    },
-    {
-      "source": "/stream/:streamid/",
+      "source": "/stream/(.*)",
       "destination": "/index.html"
     },
     {
@@ -29,27 +25,27 @@
       "destination": "/index.html"
     },
     {
-      "source": "/addvideos",
+      "source": "/addvideo",
       "destination": "/index.html"
     },
     {
-      "source": "/video/:videoid",
+      "source": "/video/(.*)",
       "destination": "/index.html"
     },
     {
-      "source": "/categories/:categoryid",
+      "source": "/categories/(.*)",
       "destination": "/index.html"
     },
     {
-      "source": "/dashboard/:streamid/",
+      "source": "/dashboard/(.*)",
       "destination": "/index.html"
     },
     {
-      "source": "/profile/:userid/",
+      "source": "/profile/(.*)",
       "destination": "/index.html"
     },
     {
-      "source": "/user/:userid/",
+      "source": "/user/(.*)",
       "destination": "/index.html"
     },
     {
